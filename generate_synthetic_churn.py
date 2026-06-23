@@ -61,12 +61,11 @@ support_interactions_6m = np.clip(np.random.poisson(1.8, N), 0, 10).astype(int)
 
 escalated_support = (np.random.random(N) < 0.15).astype(int)
 
-# NPS correlated with sentiment; range -100 to 100
-nps_base = np.random.normal(25, 40, N)
-nps_score = np.clip(
-    nps_base - complaint_count_6m * 15 - escalated_support * 25,
-    -100, 100
-).astype(int)
+# Product diversity: fraction of the 6 available products the customer uses (correlated with num_products)
+product_diversity = np.clip(
+    num_products / 6.0 + np.random.normal(0, 0.05, N),
+    0.0, 1.0
+).round(4)
 
 # Sentiment inversely correlated with complaints and escalations
 sentiment_base = np.random.normal(68, 15, N)
@@ -98,7 +97,7 @@ referral_source = np.random.choice(
 
 # Churn target
 logit = (
-    -1.4                                          # intercept → ~13.5% base rate
+    -1.25                                         # intercept → ~13.5% base rate
     - (sentiment_score - 50) * 0.04              # high sentiment reduces churn
     + (spend_trend == -1).astype(float) * 1.2    # declining spend increases churn
     - num_products * 0.18                         # more products = switching costs
@@ -113,6 +112,7 @@ logit = (
     - (sentiment_trend == 1).astype(float) * 0.3
     - (plan_tier == 'Premium').astype(float) * 0.3  # premium = more invested
     - login_frequency_30d * 0.02                  # frequent logins = engaged
+    - product_diversity * 0.5                     # diverse usage = higher switching cost
     + payment_failures_6m * 0.4                   # payment failures increase churn
     + np.random.normal(0, 0.4, N)                # noise
 )
@@ -147,7 +147,7 @@ df = pd.DataFrame({
     # Service & Sentiment (6)
     'sentiment_score': sentiment_score.round(1),
     'sentiment_trend': sentiment_trend,
-    'nps_score': nps_score,
+    'product_diversity': product_diversity,
     'complaint_count_6m': complaint_count_6m,
     'support_interactions_6m': support_interactions_6m,
     'escalated_support': escalated_support,
@@ -170,7 +170,7 @@ print("Columns:", list(df.columns))
 
 print("\nCorrelations with churn (Pearson r):")
 numeric_cols = [
-    'sentiment_score', 'nps_score', 'spend_trend', 'num_products', 'tenure_months',
+    'sentiment_score', 'product_diversity', 'spend_trend', 'num_products', 'tenure_months',
     'escalated_support', 'complaint_count_6m', 'days_since_last_login',
     'login_frequency_30d', 'feature_adoption_rate', 'auto_renewal_enabled',
 ]
