@@ -179,53 +179,64 @@ plt.savefig('outputs/viz4_sentiment_vs_churn.png', dpi=300, bbox_inches='tight')
 plt.close()
 print('Saved: viz4_sentiment_vs_churn.png')
 
-# ── VIZ 5: Spending Trend vs Churn (grouped bar + box aesthetic) ───────────
-fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-fig.suptitle('Declining Spend = Higher Churn', fontsize=15, fontweight='bold', y=1.02)
+# ── VIZ 5: Engagement Score vs Churn ──────────────────────────────────────
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+fig.suptitle('Low Engagement = Higher Churn Risk', fontsize=15, fontweight='bold', y=1.02)
 
-label_map = {-1: 'Declining\n(−1)', 0: 'Stable\n(0)', 1: 'Growing\n(+1)'}
-trend_colors = [RED, '#F5A623', GREEN]
+# Left: scatter with jitter — engagement score vs churn
+sample2 = df.sample(4000, random_state=99)
+jitter2  = np.random.default_rng(99).uniform(-0.06, 0.06, len(sample2))
+colors_e = [RED if c == 1 else '#2E86AB' for c in sample2['churn']]
 
-# Left: churn rate bar per spend_trend
-rates_by_trend = df.groupby('spend_trend')['churn'].mean() * 100
-trend_labels   = [label_map[k] for k in sorted(rates_by_trend.index)]
-trend_vals     = [rates_by_trend[k] for k in sorted(rates_by_trend.index)]
+axes[0].scatter(sample2['engagement_score'], sample2['churn'] + jitter2,
+                c=colors_e, alpha=0.30, s=16, linewidths=0)
 
-bars = axes[0].bar(trend_labels, trend_vals, color=trend_colors,
-                   edgecolor='white', linewidth=1.5, width=0.45)
-for bar, v in zip(bars, trend_vals):
-    axes[0].text(bar.get_x() + bar.get_width() / 2,
-                 bar.get_height() + 0.3,
-                 f'{v:.1f}%', ha='center', fontsize=12, fontweight='bold')
-axes[0].axhline(churn_pct, color='#333333', linestyle='--',
-                linewidth=1.5, label=f'Overall avg ({churn_pct:.1f}%)')
-axes[0].set_ylabel('Churn Rate (%)', fontsize=12)
-axes[0].set_title('Churn Rate by Spend Trend', fontsize=12, fontweight='bold')
-axes[0].set_ylim(0, max(trend_vals) * 1.2)
-axes[0].legend(fontsize=9, framealpha=0.85)
+# Trend line: avg churn per engagement bin
+bins_e = pd.cut(df['engagement_score'], bins=20)
+bin_means_e   = df.groupby(bins_e, observed=True)['churn'].mean()
+bin_centers_e = [iv.mid for iv in bin_means_e.index]
+axes[0].plot(bin_centers_e, bin_means_e.values, color='#333333',
+             linewidth=2.5, label='Avg churn rate per bin', zorder=5)
+
+axes[0].set_xlabel('Engagement Score (0–1)', fontsize=12)
+axes[0].set_ylabel('Churn (0 = Retained, 1 = Churned)', fontsize=12)
+axes[0].set_title('Engagement Score vs Churn', fontsize=12, fontweight='bold')
+axes[0].set_yticks([0, 1])
+axes[0].set_yticklabels(['Retained (0)', 'Churned (1)'])
+
+blue_p = mpatches.Patch(color='#2E86AB', label='Retained')
+red_p  = mpatches.Patch(color=RED,       label='Churned')
+line_p = plt.Line2D([0], [0], color='#333333', linewidth=2.5, label='Avg churn rate per bin')
+axes[0].legend(handles=[blue_p, red_p, line_p], fontsize=9, framealpha=0.85)
 sns.despine(ax=axes[0])
 
-# Right: monthly spend distribution — box plot per spend_trend, split by churn
-df['spend_trend_label'] = df['spend_trend'].map({-1: 'Declining', 0: 'Stable', 1: 'Growing'})
-order = ['Declining', 'Stable', 'Growing']
-palette = {'Declining': RED, 'Stable': '#F5A623', 'Growing': GREEN}
+# Right: churn rate per engagement decile (bar chart)
+df['eng_decile'] = pd.qcut(df['engagement_score'], q=10, labels=False) + 1
+decile_churn = df.groupby('eng_decile')['churn'].mean() * 100
+decile_colors = [RED if v == decile_churn.max() else
+                 GREEN if v == decile_churn.min() else '#7EB8D4'
+                 for v in decile_churn.values]
 
-sns.boxplot(data=df, x='spend_trend_label', y='monthly_spend_avg',
-            hue='churn', order=order,
-            palette={0: '#2E86AB', 1: RED},
-            width=0.55, linewidth=1.2,
-            flierprops=dict(marker='o', markersize=2, alpha=0.3),
-            ax=axes[1])
-axes[1].set_xlabel('Spend Trend', fontsize=12)
-axes[1].set_ylabel('Monthly Spend Avg ($)', fontsize=12)
-axes[1].set_title('Spend Distribution: Churners vs Retained', fontsize=12, fontweight='bold')
-handles, _ = axes[1].get_legend_handles_labels()
-axes[1].legend(handles, ['Retained', 'Churned'], title='', fontsize=10, framealpha=0.85)
+bars = axes[1].bar(decile_churn.index, decile_churn.values,
+                   color=decile_colors, edgecolor='white', linewidth=1.2, width=0.7)
+for bar, v in zip(bars, decile_churn.values):
+    axes[1].text(bar.get_x() + bar.get_width() / 2,
+                 bar.get_height() + 0.2,
+                 f'{v:.1f}%', ha='center', fontsize=8.5, fontweight='bold')
+
+axes[1].axhline(churn_pct, color='#333333', linestyle='--',
+                linewidth=1.5, label=f'Overall avg ({churn_pct:.1f}%)')
+axes[1].set_xlabel('Engagement Decile (1 = Least, 10 = Most Engaged)', fontsize=11)
+axes[1].set_ylabel('Churn Rate (%)', fontsize=12)
+axes[1].set_title('Churn Rate by Engagement Decile', fontsize=12, fontweight='bold')
+axes[1].set_xticks(range(1, 11))
+axes[1].set_ylim(0, decile_churn.max() * 1.2)
+axes[1].legend(fontsize=9, framealpha=0.85)
 sns.despine(ax=axes[1])
 
 plt.tight_layout()
-plt.savefig('outputs/viz5_spend_trend_vs_churn.png', dpi=300, bbox_inches='tight')
+plt.savefig('outputs/viz5_engagement_vs_churn.png', dpi=300, bbox_inches='tight')
 plt.close()
-print('Saved: viz5_spend_trend_vs_churn.png')
+print('Saved: viz5_engagement_vs_churn.png')
 
 print('\nAll 5 visualizations saved to outputs/')
