@@ -107,6 +107,48 @@ feat['escalation_risk'] = (
 
 feat['sentiment_z_score']      = stats.zscore(df['sentiment_score']).round(4)
 
+# ── Extended sentiment features ────────────────────────────────────────────
+
+# Severity tiers
+feat['sentiment_critical']     = (df['sentiment_score'] < 25).astype(int)   # very unhappy
+feat['sentiment_low']          = (df['sentiment_score'] < 50).astype(int)   # below neutral
+feat['sentiment_high']         = (df['sentiment_score'] > 75).astype(int)   # loyal/happy
+
+# Non-linear: squared score captures extreme low sentiment more strongly
+feat['sentiment_score_sq']     = ((df['sentiment_score'] / 100) ** 2).round(4)
+
+# Trend × level combos — most actionable combinations
+feat['sentiment_declining_and_low']   = (
+    (df['sentiment_trend'] == -1) & (df['sentiment_score'] < 50)
+).astype(int)
+
+feat['sentiment_improving_but_low']   = (
+    (df['sentiment_trend'] == 1) & (df['sentiment_score'] < 50)
+).astype(int)  # recovering but still at-risk
+
+feat['sentiment_declining_and_escalated'] = (
+    (df['sentiment_trend'] == -1) & (df['escalated_support'] == 1)
+).astype(int)  # double red flag
+
+# High value but unhappy — retention priority
+feat['high_value_low_sentiment'] = (
+    (df['monthly_spend_avg'] >= df['monthly_spend_avg'].quantile(0.75))
+    & (df['sentiment_score'] < 50)
+).astype(int)
+
+# Sentiment relative to complaints — normalized friction ratio
+feat['sentiment_per_complaint'] = (
+    df['sentiment_score']
+    / (df['complaint_count_6m'] + 1)   # +1 avoids division by zero
+).round(4)
+
+# Sentiment momentum score: trend direction weighted by current level
+# Declining from already-low = worst; improving from high = best
+feat['sentiment_momentum'] = (
+    df['sentiment_score'] / 100
+    + df['sentiment_trend'] * 0.2       # +0.2 for improving, -0.2 for declining
+).clip(0, 1).round(4)
+
 # ══════════════════════════════════════════════════════════════════════════
 # D. LIFECYCLE & TENURE
 # ══════════════════════════════════════════════════════════════════════════
@@ -264,7 +306,8 @@ categories = {
                                 ['login','adoption','engagement','active_user',
                                  'product_expansion','days_since'])],
     'C. Sentiment & Service':  [c for c in feature_cols if any(k in c for k in
-                                ['sentiment','complaint','support','escalat'])],
+                                ['sentiment','complaint','support','escalat',
+                                 'high_value_low'])],
     'D. Lifecycle & Tenure':   [c for c in feature_cols if any(k in c for k in
                                 ['tenure','customer_flag','contract','discount'])],
     'E. Payment Reliability':  [c for c in feature_cols if any(k in c for k in
