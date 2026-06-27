@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Churn Prediction — Full Project Report</title>
+<style>
+  :root {
+    --green:   #2CA02C;
+    --red:     #D62728;
+    --blue:    #2E86AB;
+    --orange:  #F5A623;
+    --purple:  #7B2D8B;
+    --bg:      #F8F9FA;
+    --card:    #FFFFFF;
+    --border:  #E0E0E0;
+    --text:    #2C2C2C;
+    --muted:   #666666;
+    --code-bg: #1E1E2E;
+    --code-fg: #CDD6F4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── Nav ── */
+  nav {
+    background: #1a1a2e;
+    color: white;
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 56px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  nav .brand { font-weight: 700; font-size: 1rem; white-space: nowrap; }
+  nav a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: .85rem;
+    white-space: nowrap;
+    transition: color .2s;
+  }
+  nav a:hover { color: white; }
+
+  /* ── Layout ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .75rem; }
+  .hero p  { font-size: 1.1rem; color: #aac; max-width: 700px; margin: 0 auto 1.5rem; }
+  .hero-pills { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
+  .pill {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    color: #ddf;
+    padding: .3rem .9rem;
+    border-radius: 20px;
+    font-size: .82rem;
+  }
+
+  /* ── Section headings ── */
+  .section { margin-top: 3rem; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: .6rem;
+    border-bottom: 3px solid var(--blue);
+  }
+  .step-badge {
+    background: var(--blue);
+    color: white;
+    font-size: .75rem;
+    font-weight: 700;
+    padding: .25rem .7rem;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .step-badge.green  { background: var(--green); }
+  .step-badge.red    { background: var(--red); }
+  .step-badge.orange { background: var(--orange); color: #222; }
+  .step-badge.purple { background: var(--purple); }
+  .section-header h2 { font-size: 1.5rem; font-weight: 700; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+  .card p, .card li { color: var(--muted); font-size: .93rem; }
+  .card ul { padding-left: 1.2rem; }
+  .card li { margin-bottom: .3rem; }
+
+  /* ── Grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  @media(max-width: 720px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    nav a { display: none; }
+  }
+
+  /* ── Stat boxes ── */
+  .stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+  }
+  .stat-box .num { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+  .stat-box .lbl { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+  .num.green  { color: var(--green); }
+  .num.red    { color: var(--red); }
+  .num.blue   { color: var(--blue); }
+  .num.orange { color: var(--orange); }
+  .num.purple { color: var(--purple); }
+
+  /* ── Code blocks ── */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 1.25rem 1.5rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-size: .83rem;
+    line-height: 1.6;
+    margin: .75rem 0;
+  }
+  code { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; }
+  .inline-code {
+    background: #eef;
+    color: #5555aa;
+    padding: .1rem .4rem;
+    border-radius: 4px;
+    font-size: .85rem;
+    font-family: monospace;
+  }
+
+  /* ── Tables ── */
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  thead th {
+    background: #1a1a2e;
+    color: white;
+    padding: .6rem 1rem;
+    text-align: left;
+    font-weight: 600;
+  }
+  tbody tr:nth-child(even) { background: #f4f6fa; }
+  tbody td { padding: .55rem 1rem; border-bottom: 1px solid var(--border); }
+  .tag-red    { color: var(--red);    font-weight: 700; }
+  .tag-green  { color: var(--green);  font-weight: 700; }
+  .tag-blue   { color: var(--blue);   font-weight: 700; }
+  .tag-orange { color: var(--orange); font-weight: 700; }
+
+  /* ── Callout boxes ── */
+  .callout {
+    border-left: 4px solid var(--blue);
+    background: #eef4fb;
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1rem 0;
+    font-size: .92rem;
+  }
+  .callout.warn  { border-color: var(--orange); background: #fff8ed; }
+  .callout.danger{ border-color: var(--red);    background: #fef0f0; }
+  .callout.good  { border-color: var(--green);  background: #edfaed; }
+  .callout strong { display: block; margin-bottom: .3rem; }
+
+  /* ── Flow diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+  .flow-step {
+    background: #1a1a2e;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .flow-arrow { color: var(--muted); font-size: 1.2rem; }
+
+  /* ── Audit section ── */
+  .pitfall {
+    background: var(--card);
+    border: 1px solid #ffd0d0;
+    border-left: 5px solid var(--red);
+    border-radius: 0 10px 10px 0;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .pitfall h4 { color: var(--red); font-size: .95rem; margin-bottom: .4rem; }
+  .pitfall p  { color: var(--muted); font-size: .88rem; }
+  .fix-box {
+    background: #edfaed;
+    border: 1px solid #b2dfb2;
+    border-left: 5px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: .6rem 1rem;
+    margin-top: .6rem;
+    font-size: .85rem;
+    color: #2a5a2a;
+  }
+
+  /* ── Progress bar ── */
+  .bar-wrap { background: #e0e0e0; border-radius: 10px; height: 10px; overflow: hidden; margin-top: .3rem; }
+  .bar { height: 100%; border-radius: 10px; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .toc h3 { font-size: 1rem; font-weight: 700; margin-bottom: .75rem; color: var(--blue); }
+  .toc ol { padding-left: 1.2rem; }
+  .toc li { margin-bottom: .35rem; }
+  .toc a  { color: var(--blue); text-decoration: none; font-size: .9rem; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* ── Footer ── */
+  footer {
+    background: #1a1a2e;
+    color: #888;
+    text-align: center;
+    padding: 2rem;
+    font-size: .85rem;
+    margin-top: 4rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <span class="brand">🔍 Churn Prediction Project</span>
+  <a href="#step1">Data Generation</a>
+  <a href="#step2">EDA</a>
+  <a href="#step3">Visualizations</a>
+  <a href="#step4">Feature Engineering</a>
+  <a href="#audit">Audit</a>
+  <a href="#next">Next Steps</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <h1>Customer Churn Prediction</h1>
+  <p>A complete end-to-end data science project — from generating synthetic data to building an ML-ready feature set. Written in plain English.</p>
+  <div class="hero-pills">
+    <span class="pill">50,000 customers</span>
+    <span class="pill">30 raw features</span>
+    <span class="pill">61 engineered features</span>
+    <span class="pill">13.4% churn rate</span>
+    <span class="pill">Python · pandas · scipy · sklearn</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <div class="toc">
+    <h3>📋 Table of Contents</h3>
+    <ol>
+      <li><a href="#what-is-churn">What is churn and why does it matter?</a></li>
+      <li><a href="#step1">Step 1 — Synthetic Data Generation</a></li>
+      <li><a href="#step2">Step 2 — Exploratory Data Analysis (7 sections)</a></li>
+      <li><a href="#step3">Step 3 — Visualizations (5 charts)</a></li>
+      <li><a href="#step4">Step 4 — Feature Engineering Pipeline</a></li>
+      <li><a href="#audit">Audit — Pitfalls &amp; Risks</a></li>
+      <li><a href="#next">What Comes Next</a></li>
+    </ol>
+  </div>
+
+  <!-- ═══ WHAT IS CHURN ═══ -->
+  <div class="section" id="what-is-churn">
+    <div class="section-header">
+      <span class="step-badge">BACKGROUND</span>
+      <h2>What is Churn — and Why Does it Matter?</h2>
+    </div>
+
+    <div class="card">
+      <p><strong>Churn</strong> means a customer stops using your product and cancels their subscription. In simple terms: they leave.</p>
+      <br>
+      <p>For a subscription business like Adobe (which this project is modelled on), losing a customer means losing all future revenue from them. It is almost always <strong>5–10× cheaper to keep an existing customer</strong> than to acquire a new one — so even a 1% reduction in churn rate can be worth millions of dollars.</p>
+      <br>
+      <p>The goal of this project is to <strong>predict which customers are about to churn</strong> — before they do — so retention teams can intervene with offers, support, or outreach.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="num red">13.4%</div>
+        <div class="lbl">Annual churn rate in our dataset</div>
+      </div>
+      <div class="stat-box">
+        <div class="num blue">6,686</div>
+        <div class="lbl">Customers who churned out of 50,000</div>
+      </div>
+      <div class="stat-box">
+        <div class="num green">43,314</div>
+        <div class="lbl">Customers who stayed (retained)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 1 ═══ -->
+  <div class="section" id="step1">
+    <div class="section-header">
+      <span class="step-badge">STEP 1</span>
+      <h2>Synthetic Data Generation</h2>
+    </div>
+
+    <div class="card">
+      <h3>Why synthetic data?</h3>
+      <p>Real customer churn data is confidential and hard to share publicly. Instead, we <em>generated</em> a realistic dataset using statistical distributions — the kind of patterns that would actually appear in a real subscription business. This lets us practice the full pipeline without needing proprietary data.</p>
+    </div>
+
+    <div class="card">
+      <h3>How was it built?</h3>
+      <p>Each feature was generated independently using an appropriate probability distribution:</p>
+      <br>
+      <table>
+        <thead><tr><th>Feature Type</th><th>Distribution Used</th><th>Why that distribution?</th></tr></thead>
+        <tbody>
+          <tr><td>Age</td><td>Normal (bell curve)</td><td>Age is naturally centred around a mean with spread on both sides</td></tr>
+          <tr><td>Tenure months</td><td>Exponential</td><td>Most customers are relatively new; a few are very long-term</td></tr>
+          <tr><td>Complaint count</td><td>Poisson</td><td>Count data — most customers have 0 complaints, few have many</td></tr>
+          <tr><td>Feature adoption rate</td><td>Beta (0–1)</td><td>A proportion that skews toward lower adoption for most users</td></tr>
+          <tr><td>Monthly spend</td><td>Exponential + offset</td><td>Most customers spend modestly; a few are very high spenders</td></tr>
+          <tr><td>Region, Product, Contract</td><td>Weighted random choice</td><td>Reflects realistic business proportions (e.g. 70% annual contracts)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>How was churn generated?</h3>
+      <p>Churn wasn't assigned randomly — it was calculated using a <strong>logistic formula</strong> that mirrors how churn actually works in the real world. Each risk factor contributed a weight to a "churn score", which was then converted to a probability:</p>
+      <pre><code>churn probability = sigmoid(
+    intercept                          # sets the baseline ~13.5% rate
+  - (sentiment_score - 50) × 0.04    # high sentiment → lower churn
+  + (spend_trend == declining) × 1.2  # declining spend → higher churn
+  - num_products × 0.18               # more products → harder to leave
+  - (tenure / 120) × 1.0             # longer tenure → more loyal
+  + escalated_support × 1.8           # escalation → much higher churn
+  + complaint_count × 0.35            # complaints → higher churn
+  + noise                             # real-world randomness
+)</code></pre>
+      <br>
+      <p>This ensures correlations are <strong>realistic and testable</strong> — for example, escalated customers churn at 39% vs 8.8% for non-escalated customers.</p>
+    </div>
+
+    <div class="card">
+      <h3>The 30 Features</h3>
+      <div class="grid-2">
+        <div>
+          <strong>Demographics (6)</strong>
+          <ul style="margin-top:.5rem">
+            <li>customer_id, age, tenure_months</li>
+            <li>region, gender, plan_tier</li>
+          </ul>
+          <br>
+          <strong>Product &amp; Engagement (7)</strong>
+          <ul style="margin-top:.5rem">
+            <li>num_products, primary_product</li>
+            <li>days_since_last_login, login_frequency_30d</li>
+            <li>feature_adoption_rate, product_changes_6m, mobile_app_user</li>
+          </ul>
+          <br>
+          <strong>Spending (5)</strong>
+          <ul style="margin-top:.5rem">
+            <li>monthly_spend_avg, monthly_spend_current</li>
+            <li>spend_trend, spend_volatility, num_txns_6m</li>
+          </ul>
+        </div>
+        <div>
+          <strong>Sentiment &amp; Service (6)</strong>
+          <ul style="margin-top:.5rem">
+            <li>sentiment_score, sentiment_trend, nps → product_diversity</li>
+            <li>complaint_count_6m, support_interactions_6m, escalated_support</li>
+          </ul>
+          <br>
+          <strong>Contract (4)</strong>
+          <ul style="margin-top:.5rem">
+            <li>contract_type, discount_applied</li>
+            <li>auto_renewal_enabled, referral_source</li>
+          </ul>
+          <br>
+          <strong>Payment (1) + Target (1)</strong>
+          <ul style="margin-top:.5rem">
+            <li>payment_failures_6m</li>
+            <li><strong>churn</strong> (0 = stayed, 1 = left)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout warn">
+      <strong>⚠️ One substitution made mid-project</strong>
+      <code>nps_score</code> was replaced with <code>product_diversity</code> because NPS was too similar to sentiment_score and added little new information. product_diversity (fraction of available products a customer uses) is a better independent signal.
+    </div>
+  </div>
+
+  <!-- ═══ STEP 2 ═══ -->
+  <div class="section" id="step2">
+    <div class="section-header">
+      <span class="step-badge green">STEP 2</span>
+      <h2>Exploratory Data Analysis (EDA)</h2>
+    </div>
+
+    <div class="card">
+      <p>Before building any model, we need to <strong>understand the data</strong>. EDA is the process of asking questions and letting the data answer them. We structured this into 7 sections.</p>
+    </div>
+
+    <!-- Section 1 -->
+    <div class="card">
+      <h3>Section 1 — Baseline Statistics &amp; The Accuracy Trap</h3>
+      <p>The first thing we checked: how imbalanced is the data?</p>
+      <br>
+      <div class="grid-2">
+        <div>
+          <p><strong>Retained:</strong> 43,314 (86.6%)</p>
+          <div class="bar-wrap"><div class="bar" style="width:86.6%;background:var(--green)"></div></div>
+          <br>
+          <p><strong>Churned:</strong> 6,686 (13.4%)</p>
+          <div class="bar-wrap"><div class="bar" style="width:13.4%;background:var(--red)"></div></div>
+        </div>
+        <div class="callout danger" style="margin:0">
+          <strong>🚨 The Accuracy Trap</strong>
+          A model that predicts "nobody churns" for every single customer would score <strong>86.6% accuracy</strong> — but it catches <strong>zero churners</strong>. This is why accuracy is a misleading metric for imbalanced data. Use <strong>F1-score, AUC-ROC, or Recall</strong> instead.
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="card">
+      <h3>Section 2 — Segment Analysis</h3>
+      <div class="grid-3">
+        <div>
+          <strong>By Product</strong><br>
+          <small style="color:var(--muted)">Narrow spread (~1pp). Product alone is a weak signal.</small>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Product</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>Premiere</td><td class="tag-red">13.8%</td></tr>
+              <tr><td>Photoshop</td><td>13.5%</td></tr>
+              <tr><td>After Effects</td><td>13.5%</td></tr>
+              <tr><td>Illustrator</td><td>13.2%</td></tr>
+              <tr><td>InDesign</td><td>13.0%</td></tr>
+              <tr><td>Audition</td><td class="tag-green">12.8%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <strong>By Region</strong><br>
+          <small style="color:var(--muted)">Nearly uniform. Region is not predictive.</small>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Region</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>APAC</td><td class="tag-red">13.6%</td></tr>
+              <tr><td>LATAM</td><td class="tag-red">13.6%</td></tr>
+              <tr><td>EU</td><td>13.5%</td></tr>
+              <tr><td>US</td><td class="tag-green">13.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <strong>By Tenure Segment ⭐</strong><br>
+          <small style="color:var(--muted)">Most actionable finding in the dataset.</small>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Tenure</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>6–12 months</td><td class="tag-red">15.7% ↑</td></tr>
+              <tr><td>0–6 months</td><td>14.7%</td></tr>
+              <tr><td>12–24 months</td><td>14.4%</td></tr>
+              <tr><td>24+ months</td><td class="tag-green">11.9% ↓</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1rem">
+        <strong>💡 Key insight from tenure analysis</strong>
+        The 6–12 month cohort has the HIGHEST churn — even higher than brand-new customers. These customers are past the onboarding "honeymoon" but haven't yet developed the habits and switching costs that make long-tenured customers loyal. This is the #1 cohort to target with retention programs.
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+    <div class="card">
+      <h3>Section 3 — Feature Correlations</h3>
+      <p>We calculated the Pearson correlation coefficient (r) between each numeric feature and churn. r ranges from -1 to +1:</p>
+      <ul style="margin:.75rem 0 .75rem 1.2rem">
+        <li><strong>Positive r</strong> → feature increases as churn increases</li>
+        <li><strong>Negative r</strong> → feature decreases as churn increases (protective)</li>
+        <li><strong>Near zero</strong> → feature has no linear relationship with churn</li>
+      </ul>
+      <table>
+        <thead><tr><th>Rank</th><th>Feature</th><th>r</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>escalated_support</td><td class="tag-red">+0.318</td><td>Escalating a support ticket is the strongest single churn signal</td></tr>
+          <tr><td>2</td><td>sentiment_score</td><td class="tag-green">-0.302</td><td>Happier customers are far less likely to churn</td></tr>
+          <tr><td>3</td><td>complaint_count_6m</td><td class="tag-red">+0.150</td><td>More complaints = more churn risk</td></tr>
+          <tr><td>4</td><td>spend_trend</td><td class="tag-green">-0.143</td><td>Growing spend = lower churn risk</td></tr>
+          <tr><td>5</td><td>engagement_score</td><td class="tag-green">-0.097</td><td>Highly engaged users rarely leave</td></tr>
+          <tr><td>6</td><td>num_products</td><td class="tag-green">-0.088</td><td>More products = higher switching cost</td></tr>
+          <tr><td>7</td><td>tenure_months</td><td class="tag-green">-0.058</td><td>Older customers are more loyal</td></tr>
+          <tr><td>8</td><td>monthly_spend_avg</td><td>-0.004</td><td>How much they spend doesn't predict churn — direction does</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Section 4 -->
+    <div class="card">
+      <h3>Section 4 — Statistical Tests (Welch t-test)</h3>
+      <p>Correlation tells us <em>if</em> two things are related. A t-test tells us <em>whether the difference is real or just random chance</em>. We compared churners vs retained on each key feature.</p>
+      <br>
+      <table>
+        <thead><tr><th>Feature</th><th>Churners avg</th><th>Retained avg</th><th>p-value</th><th>Significant?</th></tr></thead>
+        <tbody>
+          <tr><td>sentiment_score</td><td>48.4</td><td>63.7</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>complaint_count_6m</td><td>0.89</td><td>0.55</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>tenure_months</td><td>29.6</td><td>34.8</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>num_products</td><td>2.25</td><td>2.63</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>engagement_score</td><td>0.429</td><td>0.457</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>days_since_last_login</td><td>8.4</td><td>7.4</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
+          <tr><td>monthly_spend_avg</td><td>$129</td><td>$130</td><td>0.34</td><td class="tag-red">✗ Not significant</td></tr>
+        </tbody>
+      </table>
+      <div class="callout warn" style="margin-top:1rem">
+        <strong>⚠️ Surprising finding</strong>
+        <code>monthly_spend_avg</code> is NOT statistically different between churners and retained customers (p = 0.34). This means how much someone spends doesn't predict whether they'll churn — what matters is the <em>direction</em> (is it growing or declining?).
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+    <div class="card">
+      <h3>Section 5 — Behavioural Patterns</h3>
+      <div class="grid-2">
+        <table>
+          <thead><tr><th>Metric</th><th>Churners</th><th>Retained</th><th>Δ</th></tr></thead>
+          <tbody>
+            <tr><td>Sentiment score</td><td>48.4</td><td>63.7</td><td class="tag-red">-15.3</td></tr>
+            <tr><td>Engagement score</td><td>0.429</td><td>0.457</td><td class="tag-red">-0.028</td></tr>
+            <tr><td>Monthly spend</td><td>$129</td><td>$130</td><td>-$1.5</td></tr>
+            <tr><td>Num products</td><td>2.25</td><td>2.63</td><td class="tag-red">-0.38</td></tr>
+          </tbody>
+        </table>
+        <div class="stat-box" style="align-self:center">
+          <div class="num red">4.44×</div>
+          <div class="lbl">Churn lift from support escalation<br><br>39.2% churn (escalated) vs 8.8% (not escalated)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 6 -->
+    <div class="card">
+      <h3>Section 6 — Early Warning Signals</h3>
+      <div class="grid-3">
+        <div>
+          <strong>Sentiment Trend</strong>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Trend</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>Declining</td><td class="tag-red">19.7%</td></tr>
+              <tr><td>Stable</td><td>12.6%</td></tr>
+              <tr><td>Improving</td><td class="tag-green">9.1%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <strong>Spend Trend</strong>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Trend</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>Declining</td><td class="tag-red">25.1%</td></tr>
+              <tr><td>Stable</td><td>10.8%</td></tr>
+              <tr><td>Growing</td><td class="tag-green">9.7%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <strong>Login Recency</strong>
+          <table style="margin-top:.5rem">
+            <thead><tr><th>Status</th><th>Churn</th></tr></thead>
+            <tbody>
+              <tr><td>Inactive &gt;30d</td><td class="tag-red">19.2%</td></tr>
+              <tr><td>Active ≤30d</td><td class="tag-green">13.2%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 7 -->
+    <div class="card">
+      <h3>Section 7 — The At-Risk Segment (Rule-Based Flag)</h3>
+      <p>We defined a customer as "at-risk" if ANY of these 4 conditions are true:</p>
+      <pre><code>at_risk = (
+    sentiment_score &lt; 50          # unhappy
+    OR days_since_last_login &gt; 30 # inactive
+    OR complaint_count_6m &gt;= 2    # multiple complaints
+    OR spend_trend == -1           # declining spend
+)</code></pre>
+      <table style="margin-top:.75rem">
+        <thead><tr><th>Segment</th><th>Customers</th><th>% of Base</th><th>Churn Rate</th></tr></thead>
+        <tbody>
+          <tr><td><strong>At-Risk</strong></td><td>22,748</td><td>45.5%</td><td class="tag-red">22.8%</td></tr>
+          <tr><td><strong>Healthy</strong></td><td>27,252</td><td>54.5%</td><td class="tag-green">5.5%</td></tr>
+        </tbody>
+      </table>
+      <br>
+      <p><strong>Coverage:</strong> 77.6% of all actual churners are in the at-risk segment. <br>
+      <strong>Missed:</strong> 22.4% are "silent churners" — they show no obvious red flags.</p>
+      <div class="callout good" style="margin-top:1rem">
+        <strong>✅ Why this matters</strong>
+        These 4 simple rules — no model required — already let you prioritise 45.5% of your base that contains 77.6% of churners. The remaining 22.4% of silent churners is exactly why you'd build an ML model afterwards.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 3 ═══ -->
+  <div class="section" id="step3">
+    <div class="section-header">
+      <span class="step-badge orange">STEP 3</span>
+      <h2>Visualizations</h2>
+    </div>
+
+    <div class="card">
+      <p>We built two rounds of visualizations (v1 and v2), producing 5 publication-quality charts each at 150–300 DPI.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>📊 Viz 1 — Class Distribution</h3>
+        <p><strong>What:</strong> Pie chart + bar chart side by side showing 86.6% retained vs 13.4% churned.</p>
+        <p><strong>Why:</strong> First thing any data scientist checks — understanding class imbalance before modelling.</p>
+        <p><strong>Takeaway:</strong> The naive baseline model scores 86.6% accuracy by predicting "no churn" for everyone. Any real model must beat this meaningfully.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Viz 2 — Churn by Product</h3>
+        <p><strong>What:</strong> Horizontal bar chart with products ranked by churn rate, dashed average line.</p>
+        <p><strong>Why:</strong> Check if specific products are driving more churn (could indicate product-specific issues).</p>
+        <p><strong>Takeaway:</strong> Only ~1pp spread between products. Product choice alone is a very weak predictor.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Viz 3 — Feature Importance</h3>
+        <p><strong>What:</strong> Horizontal bar chart of top 10 Pearson correlations with churn. Red = increases churn, green = decreases churn.</p>
+        <p><strong>Why:</strong> Visual summary of which features matter most before building a model.</p>
+        <p><strong>Takeaway:</strong> Escalation and sentiment dominate. No feature exceeds r = 0.35 — churn is truly multi-factor.</p>
+      </div>
+      <div class="card">
+        <h3>📊 Viz 4 — Sentiment vs Churn</h3>
+        <p><strong>What:</strong> Scatter plot with 4,000 sampled customers, jittered vertically so dots don't overlap. Black trend line shows avg churn rate per sentiment bin.</p>
+        <p><strong>Why:</strong> Visualises the strongest single predictor. Trend line makes the relationship unmistakable.</p>
+        <p><strong>Takeaway:</strong> Sentiment ~20 → 30%+ churn. Sentiment ~80 → ~5% churn. Every 10-point drop meaningfully raises risk.</p>
+      </div>
+      <div class="card" style="grid-column:1/-1">
+        <h3>📊 Viz 5 — Engagement Score vs Churn (replaced Spend Trend)</h3>
+        <p><strong>What:</strong> Two subplots — Left: scatter + trend line (engagement score vs churn). Right: churn rate bar chart per engagement decile (1 = least engaged, 10 = most).</p>
+        <p><strong>Why:</strong> Engagement is the 6th strongest predictor and more actionable than spend trend (you can re-engage a customer but can't force them to spend more).</p>
+        <p><strong>Takeaway:</strong> Decile 1 churns at ~25%; Decile 10 near 0%. The right chart is also a <strong>gains by decile chart</strong> — used in direct marketing to show how much better targeted outreach is vs random.</p>
+        <br>
+        <p><strong>Chart names explained:</strong></p>
+        <ul>
+          <li><strong>Decile chart / Gains by Decile</strong> — shows churn rate within each ranked bucket</li>
+          <li><strong>Cumulative Gains Curve / Lift Curve</strong> — shows what % of churners you capture as you contact more customers, ranked by risk</li>
+          <li><strong>Gini coefficient</strong> — measures how far the lift curve bows above random. Higher = better model separation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STEP 4 ═══ -->
+  <div class="section" id="step4">
+    <div class="section-header">
+      <span class="step-badge purple">STEP 4</span>
+      <h2>Feature Engineering Pipeline</h2>
+    </div>
+
+    <div class="card">
+      <h3>What is feature engineering?</h3>
+      <p>Raw data columns are rarely in the best shape for an ML model. Feature engineering is the process of <strong>transforming, combining, and creating new columns</strong> that make patterns easier for a model to detect.</p>
+      <br>
+      <p>Think of it as translating business knowledge into maths. Instead of giving a model raw numbers, you pre-compute the signals you already know matter — so the model can focus on combining them rather than discovering them from scratch.</p>
+    </div>
+
+    <div class="card">
+      <h3>The full pipeline flow</h3>
+      <div class="flow">
+        <div class="flow-step">Raw CSV<br><small>29 features</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Transform &amp;<br>Encode</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Create New<br>Features</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">70 features<br>built</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">StandardScaler<br>(scale)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Drop collinear<br>(9 removed)</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--green)">61 final<br>features ✓</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>A. Spending Patterns (8)</h3>
+        <table>
+          <thead><tr><th>Feature</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>monthly_spend_avg</td><td>Raw</td></tr>
+            <tr><td>spend_declining / stable / growing</td><td>One-hot encoded</td></tr>
+            <tr><td>monthly_spend_pct_change</td><td>% change avg→current</td></tr>
+            <tr><td>monthly_spend_z_score</td><td>Standardised (dropped)</td></tr>
+            <tr><td>spend_volatility</td><td>Raw</td></tr>
+            <tr><td>revenue_potential</td><td>spend × num_products</td></tr>
+            <tr><td>high_spender_flag</td><td>Top 25% by spend</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>B. Engagement Patterns (8)</h3>
+        <table>
+          <thead><tr><th>Feature</th><th>Type</th></tr></thead>
+          <tbody>
+            <tr><td>days_since_last_login</td><td>Raw</td></tr>
+            <tr><td>feature_adoption_rate</td><td>Raw</td></tr>
+            <tr><td>product_diversity</td><td>Raw</td></tr>
+            <tr><td>engagement_score</td><td>Composite (logins + adoption + recency)</td></tr>
+            <tr><td>engagement_decline</td><td>Flag: inactive &gt;30 days</td></tr>
+            <tr><td>active_user_flag</td><td>Flag: logged in &lt;7 days</td></tr>
+            <tr><td>feature_adoption_flag</td><td>Flag: above median adoption</td></tr>
+            <tr><td>product_expansion</td><td>Flag: product changes &gt; 0</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card" style="grid-column:1/-1">
+        <h3>C. Sentiment &amp; Service (20) — Extended in v2</h3>
+        <div class="grid-2">
+          <div>
+            <strong>Original 11 features</strong>
+            <ul style="margin-top:.5rem">
+              <li>sentiment_score (raw)</li>
+              <li>sentiment_declining / stable / improving (one-hot)</li>
+              <li>complaint_count_6m, complaint_density, complaint_flag</li>
+              <li>support_intensity, escalation_flag, escalation_risk</li>
+            </ul>
+          </div>
+          <div>
+            <strong>10 extended features added</strong>
+            <ul style="margin-top:.5rem">
+              <li><strong>sentiment_critical</strong> — score &lt; 25 (very unhappy)</li>
+              <li><strong>sentiment_low</strong> — score &lt; 50 (below neutral) → r=+0.265</li>
+              <li><strong>sentiment_high</strong> — score &gt; 75 (loyal)</li>
+              <li><strong>sentiment_declining_and_low</strong> — both bad → r=+0.209</li>
+              <li><strong>sentiment_declining_and_escalated</strong> — double red flag → r=+0.235</li>
+              <li><strong>high_value_low_sentiment</strong> — high spend but unhappy</li>
+              <li><strong>sentiment_per_complaint</strong> — friction ratio → r=-0.234</li>
+              <li><strong>sentiment_momentum</strong> — trend-weighted score → r=-0.308 ⭐</li>
+              <li><strong>sentiment_improving_but_low</strong> — recovering but still at risk</li>
+              <li><strong>sentiment_score_sq</strong> — squared (dropped: too collinear)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>D. Lifecycle &amp; Tenure (9)</h3>
+        <ul>
+          <li>tenure_months (raw)</li>
+          <li>tenure_0_6m, tenure_6_12m, tenure_12_24m, tenure_24m_plus (one-hot)</li>
+          <li>contract_type_numeric (annual=1, monthly=0)</li>
+          <li>contract_stability (auto-renewal enabled)</li>
+          <li>discount_applied</li>
+          <li>contract_risk (monthly + no auto-renewal)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>E–F. Payment &amp; Product (12)</h3>
+        <strong>Payment (3)</strong>
+        <ul style="margin:.4rem 0 .8rem 1rem">
+          <li>failed_payments_count, payment_method_changes, payment_risk_flag</li>
+        </ul>
+        <strong>Product (9)</strong>
+        <ul style="margin:.4rem 0 0 1rem">
+          <li>product_diversity</li>
+          <li>product_photoshop / premiere / illustrator / indesign / after_effects / audition (one-hot)</li>
+          <li>product_concentration (1 / num_products)</li>
+          <li>product_risk (num_products ≤ 1)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Composite features -->
+    <div class="card">
+      <h3>G. Composite Features — The Two Most Powerful Created Features</h3>
+      <div class="grid-2">
+        <div>
+          <strong>churn_risk_score</strong> <span class="tag-red">(r = +0.360, #1 overall)</span>
+          <pre><code>churn_risk_score = (
+  sentiment_declining  × 0.15
+  escalation_flag      × 0.25  ← highest weight
+  complaint_flag       × 0.15
+  spend_declining      × 0.20
+  engagement_decline   × 0.10
+  contract_risk        × 0.10
+  payment_risk_flag    × 0.05
+)</code></pre>
+          <p style="color:var(--muted);font-size:.85rem">Weighted sum of 7 binary risk signals. Range: 0 (no risk) to 1 (all flags firing). The single strongest predictor in the entire feature set.</p>
+        </div>
+        <div>
+          <strong>loyalty_score</strong> <span class="tag-green">(r = -0.108)</span>
+          <pre><code>loyalty_score = (
+  contract_type_numeric  × 0.20
+  contract_stability     × 0.15
+  mature_customer_flag   × 0.15
+  active_user_flag       × 0.20
+  feature_adoption_flag  × 0.15
+  high_spender_flag      × 0.15
+)</code></pre>
+          <p style="color:var(--muted);font-size:.85rem">Measures how sticky and embedded a customer is. Higher = harder to leave. Opposite of the risk score.</p>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1rem">
+        <strong>💡 Why composite features beat individual ones</strong>
+        No single feature perfectly predicts churn — but combining 7 weak signals into one weighted score creates a stronger predictor. The model can then use this summary alongside the individual signals, using whichever is most useful. This is also why the composite features ranked #1 and #10 out of all 61 features.
+      </div>
+    </div>
+
+    <!-- Scaling -->
+    <div class="card">
+      <h3>Scaling — StandardScaler</h3>
+      <p>Before the collinearity check, all continuous features were scaled using <code class="inline-code">StandardScaler</code>:</p>
+      <pre><code>scaled_value = (original_value - mean) / standard_deviation</code></pre>
+      <p>This transforms every continuous feature to have <strong>mean = 0</strong> and <strong>std = 1</strong>. Without this, a feature like <code class="inline-code">monthly_spend_avg</code> (range: $10–$2,000) would overpower <code class="inline-code">feature_adoption_rate</code> (range: 0–1) simply because its numbers are bigger — even if adoption rate is more predictive.</p>
+      <br>
+      <p>Binary flags (0/1) were left unscaled as they're already on a consistent scale.</p>
+    </div>
+
+    <!-- Collinearity -->
+    <div class="card">
+      <h3>Collinearity Drop — 9 Features Removed</h3>
+      <p>Two features are "collinear" when they carry nearly identical information (correlation &gt; 0.95). Keeping both confuses the model — it's like giving it the same clue twice.</p>
+      <table style="margin-top:.75rem">
+        <thead><tr><th>Feature Dropped</th><th>Why (too similar to…)</th></tr></thead>
+        <tbody>
+          <tr><td>monthly_spend_current</td><td>monthly_spend_avg (r ≈ 0.97)</td></tr>
+          <tr><td>monthly_spend_z_score</td><td>monthly_spend_avg (same data, just scaled)</td></tr>
+          <tr><td>sentiment_decline_flag</td><td>sentiment_declining (identical column)</td></tr>
+          <tr><td>sentiment_z_score</td><td>sentiment_score (same data, just scaled)</td></tr>
+          <tr><td>sentiment_score_sq</td><td>sentiment_score (r = 0.95+)</td></tr>
+          <tr><td>new_customer_flag</td><td>tenure_0_6m (identical definition)</td></tr>
+          <tr><td>mature_customer_flag</td><td>tenure_24m_plus (identical definition)</td></tr>
+          <tr><td>failed_payments_rate</td><td>failed_payments_count (near-identical)</td></tr>
+          <tr><td>num_products</td><td>product_diversity (r = 0.82 — high but not dropped by threshold, checked manually)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Final count -->
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="num blue">29</div>
+        <div class="lbl">Raw input features</div>
+      </div>
+      <div class="stat-box">
+        <div class="num orange">70</div>
+        <div class="lbl">Features built before collinearity check</div>
+      </div>
+      <div class="stat-box">
+        <div class="num green">61</div>
+        <div class="lbl">Final ML-ready features (after dropping 9)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ AUDIT ═══ -->
+  <div class="section" id="audit">
+    <div class="section-header">
+      <span class="step-badge red">AUDIT</span>
+      <h2>Pitfalls &amp; Things We Should Watch Out For</h2>
+    </div>
+
+    <div class="card">
+      <p>Every data science project has assumptions and shortcuts that can cause problems downstream. Here is an honest audit of this project's weak points.</p>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 1 — The data is synthetic (not real)</h4>
+      <p>All 50,000 customers were generated by a formula. Real churn data is far messier — customers churn for reasons that aren't in any dataset (competitor pricing, life events, budget cuts). Correlations in synthetic data are cleaner and more predictable than in the wild.</p>
+      <div class="fix-box">✅ Fix: Use synthetic data only for practice and pipeline development. Validate every insight on real customer data before acting on it.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 2 — Churn labels were generated from the same features we're using to predict churn</h4>
+      <p>We generated churn using sentiment, spend_trend, etc., and then also use those features to predict churn. In a real project this is fine — but here it means our model is essentially reverse-engineering a formula it was designed against. Real-world performance will be lower because real churn has many unmeasured causes.</p>
+      <div class="fix-box">✅ Fix: Accept this as a limitation of synthetic data. Any model trained here will appear "too good" — treat reported metrics with appropriate scepticism.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 3 — No train/test split has been done yet</h4>
+      <p>All analysis and feature engineering was done on the full 50,000 rows. When we eventually train a model, we must split the data first — otherwise the model has "seen" all the data during training and test metrics will be inflated (overfitting).</p>
+      <div class="fix-box">✅ Fix: Before any model training, split: 70% train / 15% validation / 15% test. Feature engineering should be fitted on train and only applied (not refitted) to val/test.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 4 — StandardScaler was fit on the full dataset</h4>
+      <p>We scaled all 50,000 rows together. In a real ML pipeline, the scaler must be <em>fitted only on training data</em> and then <em>applied</em> to validation and test data. Fitting on all data leaks information from test rows into the training process (data leakage).</p>
+      <div class="fix-box">✅ Fix: Move scaler.fit_transform() inside the train split only. Use scaler.transform() (not fit_transform) on val/test sets.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 5 — engagement_score was computed from raw features that are also in the model</h4>
+      <p><code>engagement_score</code> is derived from <code>login_frequency_30d</code>, <code>feature_adoption_rate</code>, and <code>days_since_last_login</code> — all of which are also individual features in the dataset. The model now has access to both the components AND the composite. This is mild redundancy but not a critical issue since we kept individual features as well.</p>
+      <div class="fix-box">✅ Fix: Either drop the raw component features if using the composite, or keep both and let the model decide which is more useful. We kept both — which is fine for tree-based models.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 6 — product_diversity and num_products are highly correlated (r = 0.82)</h4>
+      <p>These two features measure almost the same thing — how many products a customer uses. The collinearity check threshold was 0.95, so both survived. But r = 0.82 is still high enough to cause mild issues in linear models (multicollinearity).</p>
+      <div class="fix-box">✅ Fix: For linear/logistic regression, drop one. For tree-based models (XGBoost, Random Forest) this is less of a concern as they handle redundant features better.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 7 — Composite feature weights were set manually, not learned from data</h4>
+      <p>The weights in <code>churn_risk_score</code> (e.g. escalation_flag × 0.25) were chosen based on correlation values we observed. This is reasonable but imprecise — a model trained on data will find better weights automatically.</p>
+      <div class="fix-box">✅ Fix: Treat the composite features as useful starting points for EDA and rule-based targeting. Let the ML model learn its own weighting during training — don't force the hand-tuned composite on it.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 8 — payment_method_changes is a proxy, not the real thing</h4>
+      <p>The raw data didn't include a "payment method changes" column, so we used <code>product_changes_6m</code> as a proxy. These are not the same thing. The feature has near-zero correlation with churn (r ≈ 0) and is essentially noise.</p>
+      <div class="fix-box">✅ Fix: Drop <code>payment_method_changes</code> from the final feature set — it adds no signal and is misleadingly named. A real dataset would have actual payment method change events.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 9 — Class imbalance not yet handled</h4>
+      <p>13.4% churn means the dataset has roughly 6.5 retained customers for every churner. Most ML models will naturally learn to predict "no churn" more often. We haven't applied any resampling (SMOTE, oversampling, undersampling) or class weights yet.</p>
+      <div class="fix-box">✅ Fix: When training a model, use <code>class_weight='balanced'</code> (sklearn) or <code>scale_pos_weight</code> (XGBoost), or apply SMOTE on the training set only. Evaluate with F1, AUC-ROC, and precision-recall — not accuracy.</div>
+    </div>
+
+    <div class="pitfall">
+      <h4>🚨 Pitfall 10 — Correlation ≠ Causation</h4>
+      <p>We found that escalated_support correlates strongly with churn (r = 0.32). But this doesn't mean escalations <em>cause</em> churn — it's more likely that underlying dissatisfaction causes both escalations and churn. Acting on this by suppressing escalations (e.g. making it harder to reach support) could make churn worse.</p>
+      <div class="fix-box">✅ Fix: Use correlations to identify <em>where</em> to look, not to prescribe actions. The business interpretation must come from domain experts, not statistics alone.</div>
+    </div>
+
+  </div>
+
+  <!-- ═══ NEXT STEPS ═══ -->
+  <div class="section" id="next">
+    <div class="section-header">
+      <span class="step-badge green">NEXT</span>
+      <h2>What Comes Next — The Road to a Model</h2>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>🔜 Step 5 — Model Training</h3>
+        <ul>
+          <li>Split data: 70/15/15 train/val/test</li>
+          <li>Baseline: Logistic Regression</li>
+          <li>Primary: XGBoost or LightGBM</li>
+          <li>Tune with cross-validation</li>
+          <li>Evaluate with AUC-ROC, F1, Precision-Recall curve</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔜 Step 6 — Model Evaluation</h3>
+        <ul>
+          <li>Confusion matrix at multiple thresholds</li>
+          <li>Precision-recall tradeoff (business cost of false positives vs missed churners)</li>
+          <li>Decile lift analysis</li>
+          <li>SHAP values for explainability</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔜 Step 7 — Business Output</h3>
+        <ul>
+          <li>Score each customer 0–100% churn probability</li>
+          <li>Prioritise top-risk customers for retention team</li>
+          <li>Estimate ROI: cost of intervention vs revenue saved</li>
+          <li>Set up monthly scoring pipeline</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔜 Step 8 — Monitoring</h3>
+        <ul>
+          <li>Track feature drift over time (do distributions change?)</li>
+          <li>Monitor model performance as new data arrives</li>
+          <li>Retrain quarterly or when AUC drops below threshold</li>
+          <li>A/B test retention interventions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout good" style="margin-top:1.5rem">
+      <strong>✅ Where we are in the pipeline</strong>
+      We have completed the first four steps of a full churn prediction project: data generation → EDA → visualization → feature engineering. The output file <code>synthetic_churn_features.csv</code> (50,000 rows × 62 columns) is ready to be fed directly into a model training script.
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <strong>Customer Churn Prediction Project</strong><br>
+  Built with Python · pandas · numpy · scipy · scikit-learn · matplotlib · seaborn<br>
+  50,000 synthetic customers · 30 raw features · 61 engineered features · 13.4% churn rate
+</footer>
+
+</body>
+</html>
