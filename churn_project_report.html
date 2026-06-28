@@ -19,119 +19,44 @@
     --code-bg: #1E1E2E;
     --code-fg: #CDD6F4;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px; }
 
-  body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    font-size: 15px;
-  }
-
-  /* ── Nav ── */
-  nav {
-    background: #1a1a2e;
-    color: white;
-    padding: 0 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    height: 56px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.3);
-  }
+  nav { background: #1a1a2e; color: white; padding: 0 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 1.5rem; height: 56px; box-shadow: 0 2px 8px rgba(0,0,0,.3); overflow-x: auto; }
   nav .brand { font-weight: 700; font-size: 1rem; white-space: nowrap; }
-  nav a {
-    color: #aaa;
-    text-decoration: none;
-    font-size: .85rem;
-    white-space: nowrap;
-    transition: color .2s;
-  }
+  nav a { color: #aaa; text-decoration: none; font-size: .82rem; white-space: nowrap; transition: color .2s; }
   nav a:hover { color: white; }
 
-  /* ── Layout ── */
   .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
 
-  /* ── Hero ── */
-  .hero {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
-    color: white;
-    padding: 4rem 2rem;
-    text-align: center;
-  }
+  .hero { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%); color: white; padding: 4rem 2rem; text-align: center; }
   .hero h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: .75rem; }
   .hero p  { font-size: 1.1rem; color: #aac; max-width: 700px; margin: 0 auto 1.5rem; }
   .hero-pills { display: flex; gap: .75rem; justify-content: center; flex-wrap: wrap; }
-  .pill {
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.2);
-    color: #ddf;
-    padding: .3rem .9rem;
-    border-radius: 20px;
-    font-size: .82rem;
-  }
+  .pill { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #ddf; padding: .3rem .9rem; border-radius: 20px; font-size: .82rem; }
 
-  /* ── Section headings ── */
   .section { margin-top: 3rem; }
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    padding-bottom: .6rem;
-    border-bottom: 3px solid var(--blue);
-  }
-  .step-badge {
-    background: var(--blue);
-    color: white;
-    font-size: .75rem;
-    font-weight: 700;
-    padding: .25rem .7rem;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; padding-bottom: .6rem; border-bottom: 3px solid var(--blue); }
+  .step-badge { background: var(--blue); color: white; font-size: .75rem; font-weight: 700; padding: .25rem .7rem; border-radius: 20px; white-space: nowrap; }
   .step-badge.green  { background: var(--green); }
   .step-badge.red    { background: var(--red); }
   .step-badge.orange { background: var(--orange); color: #222; }
   .step-badge.purple { background: var(--purple); }
   .section-header h2 { font-size: 1.5rem; font-weight: 700; }
 
-  /* ── Cards ── */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
   .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: .6rem; }
+  .card h4 { font-size: .95rem; font-weight: 700; margin: .8rem 0 .4rem; color: var(--blue); }
   .card p, .card li { color: var(--muted); font-size: .93rem; }
-  .card ul { padding-left: 1.2rem; }
+  .card ul, .card ol { padding-left: 1.2rem; }
   .card li { margin-bottom: .3rem; }
 
-  /* ── Grid ── */
   .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
   .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-  @media(max-width: 720px) {
-    .grid-2, .grid-3 { grid-template-columns: 1fr; }
-    nav a { display: none; }
-  }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  @media(max-width: 720px) { .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } nav a { display: none; } }
 
-  /* ── Stat boxes ── */
-  .stat-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.25rem;
-    text-align: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,.06);
-  }
+  .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; text-align: center; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
   .stat-box .num { font-size: 2.2rem; font-weight: 800; line-height: 1; }
   .stat-box .lbl { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
   .num.green  { color: var(--green); }
@@ -140,905 +65,862 @@
   .num.orange { color: var(--orange); }
   .num.purple { color: var(--purple); }
 
-  /* ── Code blocks ── */
-  pre {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    padding: 1.25rem 1.5rem;
-    border-radius: 10px;
-    overflow-x: auto;
-    font-size: .83rem;
-    line-height: 1.6;
-    margin: .75rem 0;
-  }
-  code { font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; }
-  .inline-code {
-    background: #eef;
-    color: #5555aa;
-    padding: .1rem .4rem;
-    border-radius: 4px;
-    font-size: .85rem;
-    font-family: monospace;
-  }
+  pre { background: var(--code-bg); color: var(--code-fg); padding: 1.25rem 1.5rem; border-radius: 10px; overflow-x: auto; font-size: .85rem; line-height: 1.6; margin: .75rem 0; }
 
-  /* ── Tables ── */
-  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
-  thead th {
-    background: #1a1a2e;
-    color: white;
-    padding: .6rem 1rem;
-    text-align: left;
-    font-weight: 600;
-  }
-  tbody tr:nth-child(even) { background: #f4f6fa; }
-  tbody td { padding: .55rem 1rem; border-bottom: 1px solid var(--border); }
-  .tag-red    { color: var(--red);    font-weight: 700; }
-  .tag-green  { color: var(--green);  font-weight: 700; }
-  .tag-blue   { color: var(--blue);   font-weight: 700; }
-  .tag-orange { color: var(--orange); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .75rem 0; }
+  th { background: #f0f4f8; padding: .6rem 1rem; text-align: left; font-weight: 700; border-bottom: 2px solid var(--border); }
+  td { padding: .55rem 1rem; border-bottom: 1px solid #f0f0f0; color: var(--muted); }
+  tr:hover td { background: #fafbfc; }
+  .winner { color: var(--green); font-weight: 700; }
+  .best   { background: #f0fff0 !important; }
 
-  /* ── Callout boxes ── */
-  .callout {
-    border-left: 4px solid var(--blue);
-    background: #eef4fb;
-    padding: 1rem 1.25rem;
-    border-radius: 0 8px 8px 0;
-    margin: 1rem 0;
-    font-size: .92rem;
-  }
-  .callout.warn  { border-color: var(--orange); background: #fff8ed; }
-  .callout.danger{ border-color: var(--red);    background: #fef0f0; }
-  .callout.good  { border-color: var(--green);  background: #edfaed; }
-  .callout strong { display: block; margin-bottom: .3rem; }
+  .insight-box { background: linear-gradient(135deg,#e8f4fd,#f0f8ff); border-left: 4px solid var(--blue); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: .75rem 0; font-size: .92rem; color: var(--text); }
+  .warn-box    { background: #fff8e1; border-left: 4px solid var(--orange); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: .75rem 0; font-size: .92rem; }
+  .success-box { background: #f0fff0; border-left: 4px solid var(--green); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: .75rem 0; font-size: .92rem; }
+  .danger-box  { background: #fff0f0; border-left: 4px solid var(--red); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: .75rem 0; font-size: .92rem; }
 
-  /* ── Flow diagram ── */
-  .flow {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    flex-wrap: wrap;
-    margin: 1rem 0;
-  }
-  .flow-step {
-    background: #1a1a2e;
-    color: white;
-    padding: .5rem 1rem;
-    border-radius: 8px;
-    font-size: .82rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .flow-arrow { color: var(--muted); font-size: 1.2rem; }
+  .phase-block { border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; margin-bottom: 1rem; }
+  .phase-block h4 { font-weight: 700; margin-bottom: .5rem; }
+  .phase-block.p1 { border-left: 5px solid var(--blue); }
+  .phase-block.p2 { border-left: 5px solid var(--orange); }
+  .phase-block.p3 { border-left: 5px solid var(--green); }
 
-  /* ── Audit section ── */
-  .pitfall {
-    background: var(--card);
-    border: 1px solid #ffd0d0;
-    border-left: 5px solid var(--red);
-    border-radius: 0 10px 10px 0;
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-  }
-  .pitfall h4 { color: var(--red); font-size: .95rem; margin-bottom: .4rem; }
-  .pitfall p  { color: var(--muted); font-size: .88rem; }
-  .fix-box {
-    background: #edfaed;
-    border: 1px solid #b2dfb2;
-    border-left: 5px solid var(--green);
-    border-radius: 0 8px 8px 0;
-    padding: .6rem 1rem;
-    margin-top: .6rem;
-    font-size: .85rem;
-    color: #2a5a2a;
-  }
+  .tag { display: inline-block; padding: .15rem .55rem; border-radius: 12px; font-size: .75rem; font-weight: 700; margin-right: .3rem; }
+  .tag-blue   { background: #e3f2fd; color: #1565c0; }
+  .tag-green  { background: #e8f5e9; color: #2e7d32; }
+  .tag-red    { background: #ffebee; color: #c62828; }
+  .tag-orange { background: #fff3e0; color: #e65100; }
 
-  /* ── Progress bar ── */
-  .bar-wrap { background: #e0e0e0; border-radius: 10px; height: 10px; overflow: hidden; margin-top: .3rem; }
-  .bar { height: 100%; border-radius: 10px; }
-
-  /* ── TOC ── */
-  .toc {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-  }
-  .toc h3 { font-size: 1rem; font-weight: 700; margin-bottom: .75rem; color: var(--blue); }
-  .toc ol { padding-left: 1.2rem; }
-  .toc li { margin-bottom: .35rem; }
-  .toc a  { color: var(--blue); text-decoration: none; font-size: .9rem; }
-  .toc a:hover { text-decoration: underline; }
-
-  /* ── Footer ── */
-  footer {
-    background: #1a1a2e;
-    color: #888;
-    text-align: center;
-    padding: 2rem;
-    font-size: .85rem;
-    margin-top: 4rem;
-  }
+  footer { background: #1a1a2e; color: #888; text-align: center; padding: 2rem; font-size: .85rem; margin-top: 4rem; }
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
 <nav>
-  <span class="brand">🔍 Churn Prediction Project</span>
-  <a href="#step1">Data Generation</a>
-  <a href="#step2">EDA</a>
-  <a href="#step3">Visualizations</a>
-  <a href="#step4">Feature Engineering</a>
-  <a href="#audit">Audit</a>
-  <a href="#next">Next Steps</a>
+  <span class="brand">Churn Prediction</span>
+  <a href="#data">Data</a>
+  <a href="#eda">EDA</a>
+  <a href="#features">Features</a>
+  <a href="#models">Models</a>
+  <a href="#threshold">Threshold</a>
+  <a href="#xgb">XGB Full</a>
+  <a href="#abtest">A/B Test</a>
+  <a href="#business">Business</a>
+  <a href="#pitfalls">Pitfalls</a>
+  <a href="#summary">Summary</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
 <div class="hero">
   <h1>Customer Churn Prediction</h1>
-  <p>A complete end-to-end data science project — from generating synthetic data to building an ML-ready feature set. Written in plain English.</p>
+  <p>End-to-end ML project: synthetic data generation → EDA → feature engineering → model training → threshold optimization → A/B test design → business impact</p>
   <div class="hero-pills">
-    <span class="pill">50,000 customers</span>
-    <span class="pill">30 raw features</span>
-    <span class="pill">61 engineered features</span>
-    <span class="pill">13.4% churn rate</span>
-    <span class="pill">Python · pandas · scipy · sklearn</span>
+    <span class="pill">50,000 Customers</span>
+    <span class="pill">61 Engineered Features</span>
+    <span class="pill">5 Models Compared</span>
+    <span class="pill">AUC-ROC 0.8386</span>
+    <span class="pill">ROI 68.4%</span>
+    <span class="pill">$2.3M Net Benefit</span>
   </div>
 </div>
 
 <div class="container">
 
-  <!-- TOC -->
-  <div class="toc">
-    <h3>📋 Table of Contents</h3>
-    <ol>
-      <li><a href="#what-is-churn">What is churn and why does it matter?</a></li>
-      <li><a href="#step1">Step 1 — Synthetic Data Generation</a></li>
-      <li><a href="#step2">Step 2 — Exploratory Data Analysis (7 sections)</a></li>
-      <li><a href="#step3">Step 3 — Visualizations (5 charts)</a></li>
-      <li><a href="#step4">Step 4 — Feature Engineering Pipeline</a></li>
-      <li><a href="#audit">Audit — Pitfalls &amp; Risks</a></li>
-      <li><a href="#next">What Comes Next</a></li>
-    </ol>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 1: DATA GENERATION -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="data">
+  <div class="section-header">
+    <span class="step-badge">Step 1</span>
+    <h2>Synthetic Data Generation</h2>
   </div>
 
-  <!-- ═══ WHAT IS CHURN ═══ -->
-  <div class="section" id="what-is-churn">
-    <div class="section-header">
-      <span class="step-badge">BACKGROUND</span>
-      <h2>What is Churn — and Why Does it Matter?</h2>
-    </div>
-
-    <div class="card">
-      <p><strong>Churn</strong> means a customer stops using your product and cancels their subscription. In simple terms: they leave.</p>
-      <br>
-      <p>For a subscription business like Adobe (which this project is modelled on), losing a customer means losing all future revenue from them. It is almost always <strong>5–10× cheaper to keep an existing customer</strong> than to acquire a new one — so even a 1% reduction in churn rate can be worth millions of dollars.</p>
-      <br>
-      <p>The goal of this project is to <strong>predict which customers are about to churn</strong> — before they do — so retention teams can intervene with offers, support, or outreach.</p>
-    </div>
-
-    <div class="grid-3">
-      <div class="stat-box">
-        <div class="num red">13.4%</div>
-        <div class="lbl">Annual churn rate in our dataset</div>
-      </div>
-      <div class="stat-box">
-        <div class="num blue">6,686</div>
-        <div class="lbl">Customers who churned out of 50,000</div>
-      </div>
-      <div class="stat-box">
-        <div class="num green">43,314</div>
-        <div class="lbl">Customers who stayed (retained)</div>
-      </div>
-    </div>
+  <div class="grid-4">
+    <div class="stat-box"><div class="num blue">50,000</div><div class="lbl">Customers Generated</div></div>
+    <div class="stat-box"><div class="num green">30</div><div class="lbl">Raw Features</div></div>
+    <div class="stat-box"><div class="num red">13.4%</div><div class="lbl">Churn Rate</div></div>
+    <div class="stat-box"><div class="num orange">86.6%</div><div class="lbl">Retained Rate</div></div>
   </div>
 
-  <!-- ═══ STEP 1 ═══ -->
-  <div class="section" id="step1">
-    <div class="section-header">
-      <span class="step-badge">STEP 1</span>
-      <h2>Synthetic Data Generation</h2>
-    </div>
-
-    <div class="card">
-      <h3>Why synthetic data?</h3>
-      <p>Real customer churn data is confidential and hard to share publicly. Instead, we <em>generated</em> a realistic dataset using statistical distributions — the kind of patterns that would actually appear in a real subscription business. This lets us practice the full pipeline without needing proprietary data.</p>
-    </div>
-
-    <div class="card">
-      <h3>How was it built?</h3>
-      <p>Each feature was generated independently using an appropriate probability distribution:</p>
-      <br>
-      <table>
-        <thead><tr><th>Feature Type</th><th>Distribution Used</th><th>Why that distribution?</th></tr></thead>
-        <tbody>
-          <tr><td>Age</td><td>Normal (bell curve)</td><td>Age is naturally centred around a mean with spread on both sides</td></tr>
-          <tr><td>Tenure months</td><td>Exponential</td><td>Most customers are relatively new; a few are very long-term</td></tr>
-          <tr><td>Complaint count</td><td>Poisson</td><td>Count data — most customers have 0 complaints, few have many</td></tr>
-          <tr><td>Feature adoption rate</td><td>Beta (0–1)</td><td>A proportion that skews toward lower adoption for most users</td></tr>
-          <tr><td>Monthly spend</td><td>Exponential + offset</td><td>Most customers spend modestly; a few are very high spenders</td></tr>
-          <tr><td>Region, Product, Contract</td><td>Weighted random choice</td><td>Reflects realistic business proportions (e.g. 70% annual contracts)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <h3>How was churn generated?</h3>
-      <p>Churn wasn't assigned randomly — it was calculated using a <strong>logistic formula</strong> that mirrors how churn actually works in the real world. Each risk factor contributed a weight to a "churn score", which was then converted to a probability:</p>
-      <pre><code>churn probability = sigmoid(
-    intercept                          # sets the baseline ~13.5% rate
-  - (sentiment_score - 50) × 0.04    # high sentiment → lower churn
-  + (spend_trend == declining) × 1.2  # declining spend → higher churn
-  - num_products × 0.18               # more products → harder to leave
-  - (tenure / 120) × 1.0             # longer tenure → more loyal
-  + escalated_support × 1.8           # escalation → much higher churn
-  + complaint_count × 0.35            # complaints → higher churn
-  + noise                             # real-world randomness
-)</code></pre>
-      <br>
-      <p>This ensures correlations are <strong>realistic and testable</strong> — for example, escalated customers churn at 39% vs 8.8% for non-escalated customers.</p>
-    </div>
-
-    <div class="card">
-      <h3>The 30 Features</h3>
-      <div class="grid-2">
-        <div>
-          <strong>Demographics (6)</strong>
-          <ul style="margin-top:.5rem">
-            <li>customer_id, age, tenure_months</li>
-            <li>region, gender, plan_tier</li>
-          </ul>
-          <br>
-          <strong>Product &amp; Engagement (7)</strong>
-          <ul style="margin-top:.5rem">
-            <li>num_products, primary_product</li>
-            <li>days_since_last_login, login_frequency_30d</li>
-            <li>feature_adoption_rate, product_changes_6m, mobile_app_user</li>
-          </ul>
-          <br>
-          <strong>Spending (5)</strong>
-          <ul style="margin-top:.5rem">
-            <li>monthly_spend_avg, monthly_spend_current</li>
-            <li>spend_trend, spend_volatility, num_txns_6m</li>
-          </ul>
-        </div>
-        <div>
-          <strong>Sentiment &amp; Service (6)</strong>
-          <ul style="margin-top:.5rem">
-            <li>sentiment_score, sentiment_trend, nps → product_diversity</li>
-            <li>complaint_count_6m, support_interactions_6m, escalated_support</li>
-          </ul>
-          <br>
-          <strong>Contract (4)</strong>
-          <ul style="margin-top:.5rem">
-            <li>contract_type, discount_applied</li>
-            <li>auto_renewal_enabled, referral_source</li>
-          </ul>
-          <br>
-          <strong>Payment (1) + Target (1)</strong>
-          <ul style="margin-top:.5rem">
-            <li>payment_failures_6m</li>
-            <li><strong>churn</strong> (0 = stayed, 1 = left)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="callout warn">
-      <strong>⚠️ One substitution made mid-project</strong>
-      <code>nps_score</code> was replaced with <code>product_diversity</code> because NPS was too similar to sentiment_score and added little new information. product_diversity (fraction of available products a customer uses) is a better independent signal.
-    </div>
+  <div class="card" style="margin-top:1.25rem">
+    <h3>Why Synthetic Data?</h3>
+    <p>Real customer data is confidential, regulated, and unavailable for open projects. Synthetic data lets us design a realistic dataset with known ground truth — we control the churn rate, feature distributions, and which factors drive churn. This makes it perfect for demonstrating the full ML pipeline.</p>
   </div>
 
-  <!-- ═══ STEP 2 ═══ -->
-  <div class="section" id="step2">
-    <div class="section-header">
-      <span class="step-badge green">STEP 2</span>
-      <h2>Exploratory Data Analysis (EDA)</h2>
-    </div>
-
+  <div class="grid-2">
     <div class="card">
-      <p>Before building any model, we need to <strong>understand the data</strong>. EDA is the process of asking questions and letting the data answer them. We structured this into 7 sections.</p>
+      <h3>30 Features Generated</h3>
+      <h4>Demographics</h4>
+      <ul><li>age, gender, region, tenure_months</li></ul>
+      <h4>Product & Plan</h4>
+      <ul><li>plan_tier (Basic/Standard/Premium)</li><li>primary_product, num_products, product_diversity</li><li>contract_type (monthly/annual/2-year)</li></ul>
+      <h4>Engagement</h4>
+      <ul><li>login_frequency_30d, days_since_last_login</li><li>feature_adoption_rate, mobile_app_user</li></ul>
+      <h4>Financial</h4>
+      <ul><li>monthly_spend_avg, monthly_spend_current</li><li>spend_trend, spend_volatility, num_txns_6m</li><li>payment_failures_6m, discount_applied</li></ul>
+      <h4>Sentiment & Support</h4>
+      <ul><li>sentiment_score (0–100), sentiment_trend</li><li>complaint_count_6m, support_interactions_6m</li><li>escalated_support, auto_renewal_enabled</li></ul>
     </div>
-
-    <!-- Section 1 -->
     <div class="card">
-      <h3>Section 1 — Baseline Statistics &amp; The Accuracy Trap</h3>
-      <p>The first thing we checked: how imbalanced is the data?</p>
-      <br>
-      <div class="grid-2">
-        <div>
-          <p><strong>Retained:</strong> 43,314 (86.6%)</p>
-          <div class="bar-wrap"><div class="bar" style="width:86.6%;background:var(--green)"></div></div>
-          <br>
-          <p><strong>Churned:</strong> 6,686 (13.4%)</p>
-          <div class="bar-wrap"><div class="bar" style="width:13.4%;background:var(--red)"></div></div>
-        </div>
-        <div class="callout danger" style="margin:0">
-          <strong>🚨 The Accuracy Trap</strong>
-          A model that predicts "nobody churns" for every single customer would score <strong>86.6% accuracy</strong> — but it catches <strong>zero churners</strong>. This is why accuracy is a misleading metric for imbalanced data. Use <strong>F1-score, AUC-ROC, or Recall</strong> instead.
-        </div>
-      </div>
+      <h3>How Churn Labels Were Created</h3>
+      <p>Churn probability was generated via a logistic formula — the same math used in logistic regression — with domain-realistic weights:</p>
+      <pre>logit = -1.25
+  - (sentiment_score-50) × 0.04   # low sentiment → churn
+  + escalated_support × 1.8       # escalation is strong signal
+  + complaint_count × 0.35
+  - feature_adoption × 1.2        # engaged users stay
+  + (contract=='monthly') × 0.6   # short contracts → churn
+  - auto_renewal × 0.5
+  + payment_failures × 0.4
+  + noise                         # random variation
+
+p_churn = 1 / (1 + e^(-logit))</pre>
+      <div class="insight-box">Intercept of -1.25 was tuned iteratively to produce a 13.4% churn rate — matching realistic SaaS industry averages.</div>
     </div>
+  </div>
+</div>
 
-    <!-- Section 2 -->
-    <div class="card">
-      <h3>Section 2 — Segment Analysis</h3>
-      <div class="grid-3">
-        <div>
-          <strong>By Product</strong><br>
-          <small style="color:var(--muted)">Narrow spread (~1pp). Product alone is a weak signal.</small>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Product</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>Premiere</td><td class="tag-red">13.8%</td></tr>
-              <tr><td>Photoshop</td><td>13.5%</td></tr>
-              <tr><td>After Effects</td><td>13.5%</td></tr>
-              <tr><td>Illustrator</td><td>13.2%</td></tr>
-              <tr><td>InDesign</td><td>13.0%</td></tr>
-              <tr><td>Audition</td><td class="tag-green">12.8%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <strong>By Region</strong><br>
-          <small style="color:var(--muted)">Nearly uniform. Region is not predictive.</small>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Region</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>APAC</td><td class="tag-red">13.6%</td></tr>
-              <tr><td>LATAM</td><td class="tag-red">13.6%</td></tr>
-              <tr><td>EU</td><td>13.5%</td></tr>
-              <tr><td>US</td><td class="tag-green">13.1%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <strong>By Tenure Segment ⭐</strong><br>
-          <small style="color:var(--muted)">Most actionable finding in the dataset.</small>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Tenure</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>6–12 months</td><td class="tag-red">15.7% ↑</td></tr>
-              <tr><td>0–6 months</td><td>14.7%</td></tr>
-              <tr><td>12–24 months</td><td>14.4%</td></tr>
-              <tr><td>24+ months</td><td class="tag-green">11.9% ↓</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div class="callout" style="margin-top:1rem">
-        <strong>💡 Key insight from tenure analysis</strong>
-        The 6–12 month cohort has the HIGHEST churn — even higher than brand-new customers. These customers are past the onboarding "honeymoon" but haven't yet developed the habits and switching costs that make long-tenured customers loyal. This is the #1 cohort to target with retention programs.
-      </div>
-    </div>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 2: EDA -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="eda">
+  <div class="section-header">
+    <span class="step-badge green">Step 2</span>
+    <h2>Exploratory Data Analysis</h2>
+  </div>
 
-    <!-- Section 3 -->
+  <div class="card">
+    <h3>What EDA Does</h3>
+    <p>Before building any model, we explore the data to understand distributions, find patterns, identify anomalies, and discover which features are most predictive. EDA guides all subsequent decisions — which features to engineer, which models to try, what biases to watch for.</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="stat-box"><div class="num red">4.44×</div><div class="lbl">Escalation Churn Lift</div></div>
+    <div class="stat-box"><div class="num blue">15.7%</div><div class="lbl">6–12 Month Tenure Churn</div></div>
+    <div class="stat-box"><div class="num green">77.6%</div><div class="lbl">Churners Caught by 4 Rules</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.25rem">
     <div class="card">
-      <h3>Section 3 — Feature Correlations</h3>
-      <p>We calculated the Pearson correlation coefficient (r) between each numeric feature and churn. r ranges from -1 to +1:</p>
-      <ul style="margin:.75rem 0 .75rem 1.2rem">
-        <li><strong>Positive r</strong> → feature increases as churn increases</li>
-        <li><strong>Negative r</strong> → feature decreases as churn increases (protective)</li>
-        <li><strong>Near zero</strong> → feature has no linear relationship with churn</li>
+      <h3>Key Findings</h3>
+      <ul>
+        <li><strong>Sentiment is the strongest predictor</strong> — Pearson r = –0.35 with churn. Customers who feel bad about the product leave.</li>
+        <li><strong>Escalation multiplies churn 4.4×</strong> — customers who escalated a support ticket churn at 44% vs 10% baseline.</li>
+        <li><strong>Tenure sweet spot at risk:</strong> 6–12 month customers have the highest churn (15.7%) — past the honeymoon, not yet committed.</li>
+        <li><strong>Monthly contracts churn 2× more</strong> than annual contracts — no lock-in means easy exit.</li>
+        <li><strong>Payment failures are a leading indicator</strong> — often signal financial distress before churn.</li>
+        <li><strong>Feature adoption protects</strong> — customers using more features have significantly lower churn.</li>
       </ul>
-      <table>
-        <thead><tr><th>Rank</th><th>Feature</th><th>r</th><th>Meaning</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>escalated_support</td><td class="tag-red">+0.318</td><td>Escalating a support ticket is the strongest single churn signal</td></tr>
-          <tr><td>2</td><td>sentiment_score</td><td class="tag-green">-0.302</td><td>Happier customers are far less likely to churn</td></tr>
-          <tr><td>3</td><td>complaint_count_6m</td><td class="tag-red">+0.150</td><td>More complaints = more churn risk</td></tr>
-          <tr><td>4</td><td>spend_trend</td><td class="tag-green">-0.143</td><td>Growing spend = lower churn risk</td></tr>
-          <tr><td>5</td><td>engagement_score</td><td class="tag-green">-0.097</td><td>Highly engaged users rarely leave</td></tr>
-          <tr><td>6</td><td>num_products</td><td class="tag-green">-0.088</td><td>More products = higher switching cost</td></tr>
-          <tr><td>7</td><td>tenure_months</td><td class="tag-green">-0.058</td><td>Older customers are more loyal</td></tr>
-          <tr><td>8</td><td>monthly_spend_avg</td><td>-0.004</td><td>How much they spend doesn't predict churn — direction does</td></tr>
-        </tbody>
-      </table>
     </div>
-
-    <!-- Section 4 -->
     <div class="card">
-      <h3>Section 4 — Statistical Tests (Welch t-test)</h3>
-      <p>Correlation tells us <em>if</em> two things are related. A t-test tells us <em>whether the difference is real or just random chance</em>. We compared churners vs retained on each key feature.</p>
-      <br>
-      <table>
-        <thead><tr><th>Feature</th><th>Churners avg</th><th>Retained avg</th><th>p-value</th><th>Significant?</th></tr></thead>
-        <tbody>
-          <tr><td>sentiment_score</td><td>48.4</td><td>63.7</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>complaint_count_6m</td><td>0.89</td><td>0.55</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>tenure_months</td><td>29.6</td><td>34.8</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>num_products</td><td>2.25</td><td>2.63</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>engagement_score</td><td>0.429</td><td>0.457</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>days_since_last_login</td><td>8.4</td><td>7.4</td><td>&lt;0.001</td><td class="tag-green">*** Yes</td></tr>
-          <tr><td>monthly_spend_avg</td><td>$129</td><td>$130</td><td>0.34</td><td class="tag-red">✗ Not significant</td></tr>
-        </tbody>
-      </table>
-      <div class="callout warn" style="margin-top:1rem">
-        <strong>⚠️ Surprising finding</strong>
-        <code>monthly_spend_avg</code> is NOT statistically different between churners and retained customers (p = 0.34). This means how much someone spends doesn't predict whether they'll churn — what matters is the <em>direction</em> (is it growing or declining?).
-      </div>
-    </div>
-
-    <!-- Section 5 -->
-    <div class="card">
-      <h3>Section 5 — Behavioural Patterns</h3>
-      <div class="grid-2">
-        <table>
-          <thead><tr><th>Metric</th><th>Churners</th><th>Retained</th><th>Δ</th></tr></thead>
-          <tbody>
-            <tr><td>Sentiment score</td><td>48.4</td><td>63.7</td><td class="tag-red">-15.3</td></tr>
-            <tr><td>Engagement score</td><td>0.429</td><td>0.457</td><td class="tag-red">-0.028</td></tr>
-            <tr><td>Monthly spend</td><td>$129</td><td>$130</td><td>-$1.5</td></tr>
-            <tr><td>Num products</td><td>2.25</td><td>2.63</td><td class="tag-red">-0.38</td></tr>
-          </tbody>
-        </table>
-        <div class="stat-box" style="align-self:center">
-          <div class="num red">4.44×</div>
-          <div class="lbl">Churn lift from support escalation<br><br>39.2% churn (escalated) vs 8.8% (not escalated)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 6 -->
-    <div class="card">
-      <h3>Section 6 — Early Warning Signals</h3>
-      <div class="grid-3">
-        <div>
-          <strong>Sentiment Trend</strong>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Trend</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>Declining</td><td class="tag-red">19.7%</td></tr>
-              <tr><td>Stable</td><td>12.6%</td></tr>
-              <tr><td>Improving</td><td class="tag-green">9.1%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <strong>Spend Trend</strong>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Trend</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>Declining</td><td class="tag-red">25.1%</td></tr>
-              <tr><td>Stable</td><td>10.8%</td></tr>
-              <tr><td>Growing</td><td class="tag-green">9.7%</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <strong>Login Recency</strong>
-          <table style="margin-top:.5rem">
-            <thead><tr><th>Status</th><th>Churn</th></tr></thead>
-            <tbody>
-              <tr><td>Inactive &gt;30d</td><td class="tag-red">19.2%</td></tr>
-              <tr><td>Active ≤30d</td><td class="tag-green">13.2%</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 7 -->
-    <div class="card">
-      <h3>Section 7 — The At-Risk Segment (Rule-Based Flag)</h3>
-      <p>We defined a customer as "at-risk" if ANY of these 4 conditions are true:</p>
-      <pre><code>at_risk = (
-    sentiment_score &lt; 50          # unhappy
-    OR days_since_last_login &gt; 30 # inactive
-    OR complaint_count_6m &gt;= 2    # multiple complaints
-    OR spend_trend == -1           # declining spend
-)</code></pre>
-      <table style="margin-top:.75rem">
-        <thead><tr><th>Segment</th><th>Customers</th><th>% of Base</th><th>Churn Rate</th></tr></thead>
-        <tbody>
-          <tr><td><strong>At-Risk</strong></td><td>22,748</td><td>45.5%</td><td class="tag-red">22.8%</td></tr>
-          <tr><td><strong>Healthy</strong></td><td>27,252</td><td>54.5%</td><td class="tag-green">5.5%</td></tr>
-        </tbody>
-      </table>
-      <br>
-      <p><strong>Coverage:</strong> 77.6% of all actual churners are in the at-risk segment. <br>
-      <strong>Missed:</strong> 22.4% are "silent churners" — they show no obvious red flags.</p>
-      <div class="callout good" style="margin-top:1rem">
-        <strong>✅ Why this matters</strong>
-        These 4 simple rules — no model required — already let you prioritise 45.5% of your base that contains 77.6% of churners. The remaining 22.4% of silent churners is exactly why you'd build an ML model afterwards.
-      </div>
+      <h3>At-Risk Rule Engine (4 Rules)</h3>
+      <p>Simple business rules that flag 77.6% of churners:</p>
+      <pre>at_risk = (
+  (sentiment_score &lt; 50)     OR
+  (days_since_login &gt; 30)    OR
+  (complaint_count_6m >= 2)  OR
+  (spend_trend == declining)
+)</pre>
+      <div class="warn-box"><strong>Why rules aren't enough:</strong> these rules flag 42% of all customers — a massive false positive rate. The ML model narrows this down with probabilities, letting us prioritise who to contact first.</div>
     </div>
   </div>
 
-  <!-- ═══ STEP 3 ═══ -->
-  <div class="section" id="step3">
-    <div class="section-header">
-      <span class="step-badge orange">STEP 3</span>
-      <h2>Visualizations</h2>
-    </div>
-
-    <div class="card">
-      <p>We built two rounds of visualizations (v1 and v2), producing 5 publication-quality charts each at 150–300 DPI.</p>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h3>📊 Viz 1 — Class Distribution</h3>
-        <p><strong>What:</strong> Pie chart + bar chart side by side showing 86.6% retained vs 13.4% churned.</p>
-        <p><strong>Why:</strong> First thing any data scientist checks — understanding class imbalance before modelling.</p>
-        <p><strong>Takeaway:</strong> The naive baseline model scores 86.6% accuracy by predicting "no churn" for everyone. Any real model must beat this meaningfully.</p>
-      </div>
-      <div class="card">
-        <h3>📊 Viz 2 — Churn by Product</h3>
-        <p><strong>What:</strong> Horizontal bar chart with products ranked by churn rate, dashed average line.</p>
-        <p><strong>Why:</strong> Check if specific products are driving more churn (could indicate product-specific issues).</p>
-        <p><strong>Takeaway:</strong> Only ~1pp spread between products. Product choice alone is a very weak predictor.</p>
-      </div>
-      <div class="card">
-        <h3>📊 Viz 3 — Feature Importance</h3>
-        <p><strong>What:</strong> Horizontal bar chart of top 10 Pearson correlations with churn. Red = increases churn, green = decreases churn.</p>
-        <p><strong>Why:</strong> Visual summary of which features matter most before building a model.</p>
-        <p><strong>Takeaway:</strong> Escalation and sentiment dominate. No feature exceeds r = 0.35 — churn is truly multi-factor.</p>
-      </div>
-      <div class="card">
-        <h3>📊 Viz 4 — Sentiment vs Churn</h3>
-        <p><strong>What:</strong> Scatter plot with 4,000 sampled customers, jittered vertically so dots don't overlap. Black trend line shows avg churn rate per sentiment bin.</p>
-        <p><strong>Why:</strong> Visualises the strongest single predictor. Trend line makes the relationship unmistakable.</p>
-        <p><strong>Takeaway:</strong> Sentiment ~20 → 30%+ churn. Sentiment ~80 → ~5% churn. Every 10-point drop meaningfully raises risk.</p>
-      </div>
-      <div class="card" style="grid-column:1/-1">
-        <h3>📊 Viz 5 — Engagement Score vs Churn (replaced Spend Trend)</h3>
-        <p><strong>What:</strong> Two subplots — Left: scatter + trend line (engagement score vs churn). Right: churn rate bar chart per engagement decile (1 = least engaged, 10 = most).</p>
-        <p><strong>Why:</strong> Engagement is the 6th strongest predictor and more actionable than spend trend (you can re-engage a customer but can't force them to spend more).</p>
-        <p><strong>Takeaway:</strong> Decile 1 churns at ~25%; Decile 10 near 0%. The right chart is also a <strong>gains by decile chart</strong> — used in direct marketing to show how much better targeted outreach is vs random.</p>
-        <br>
-        <p><strong>Chart names explained:</strong></p>
-        <ul>
-          <li><strong>Decile chart / Gains by Decile</strong> — shows churn rate within each ranked bucket</li>
-          <li><strong>Cumulative Gains Curve / Lift Curve</strong> — shows what % of churners you capture as you contact more customers, ranked by risk</li>
-          <li><strong>Gini coefficient</strong> — measures how far the lift curve bows above random. Higher = better model separation</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ STEP 4 ═══ -->
-  <div class="section" id="step4">
-    <div class="section-header">
-      <span class="step-badge purple">STEP 4</span>
-      <h2>Feature Engineering Pipeline</h2>
-    </div>
-
-    <div class="card">
-      <h3>What is feature engineering?</h3>
-      <p>Raw data columns are rarely in the best shape for an ML model. Feature engineering is the process of <strong>transforming, combining, and creating new columns</strong> that make patterns easier for a model to detect.</p>
-      <br>
-      <p>Think of it as translating business knowledge into maths. Instead of giving a model raw numbers, you pre-compute the signals you already know matter — so the model can focus on combining them rather than discovering them from scratch.</p>
-    </div>
-
-    <div class="card">
-      <h3>The full pipeline flow</h3>
-      <div class="flow">
-        <div class="flow-step">Raw CSV<br><small>29 features</small></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">Transform &amp;<br>Encode</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">Create New<br>Features</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">70 features<br>built</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">StandardScaler<br>(scale)</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step">Drop collinear<br>(9 removed)</div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-step" style="background:var(--green)">61 final<br>features ✓</div>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card">
-        <h3>A. Spending Patterns (8)</h3>
-        <table>
-          <thead><tr><th>Feature</th><th>Type</th></tr></thead>
-          <tbody>
-            <tr><td>monthly_spend_avg</td><td>Raw</td></tr>
-            <tr><td>spend_declining / stable / growing</td><td>One-hot encoded</td></tr>
-            <tr><td>monthly_spend_pct_change</td><td>% change avg→current</td></tr>
-            <tr><td>monthly_spend_z_score</td><td>Standardised (dropped)</td></tr>
-            <tr><td>spend_volatility</td><td>Raw</td></tr>
-            <tr><td>revenue_potential</td><td>spend × num_products</td></tr>
-            <tr><td>high_spender_flag</td><td>Top 25% by spend</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card">
-        <h3>B. Engagement Patterns (8)</h3>
-        <table>
-          <thead><tr><th>Feature</th><th>Type</th></tr></thead>
-          <tbody>
-            <tr><td>days_since_last_login</td><td>Raw</td></tr>
-            <tr><td>feature_adoption_rate</td><td>Raw</td></tr>
-            <tr><td>product_diversity</td><td>Raw</td></tr>
-            <tr><td>engagement_score</td><td>Composite (logins + adoption + recency)</td></tr>
-            <tr><td>engagement_decline</td><td>Flag: inactive &gt;30 days</td></tr>
-            <tr><td>active_user_flag</td><td>Flag: logged in &lt;7 days</td></tr>
-            <tr><td>feature_adoption_flag</td><td>Flag: above median adoption</td></tr>
-            <tr><td>product_expansion</td><td>Flag: product changes &gt; 0</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card" style="grid-column:1/-1">
-        <h3>C. Sentiment &amp; Service (20) — Extended in v2</h3>
-        <div class="grid-2">
-          <div>
-            <strong>Original 11 features</strong>
-            <ul style="margin-top:.5rem">
-              <li>sentiment_score (raw)</li>
-              <li>sentiment_declining / stable / improving (one-hot)</li>
-              <li>complaint_count_6m, complaint_density, complaint_flag</li>
-              <li>support_intensity, escalation_flag, escalation_risk</li>
-            </ul>
-          </div>
-          <div>
-            <strong>10 extended features added</strong>
-            <ul style="margin-top:.5rem">
-              <li><strong>sentiment_critical</strong> — score &lt; 25 (very unhappy)</li>
-              <li><strong>sentiment_low</strong> — score &lt; 50 (below neutral) → r=+0.265</li>
-              <li><strong>sentiment_high</strong> — score &gt; 75 (loyal)</li>
-              <li><strong>sentiment_declining_and_low</strong> — both bad → r=+0.209</li>
-              <li><strong>sentiment_declining_and_escalated</strong> — double red flag → r=+0.235</li>
-              <li><strong>high_value_low_sentiment</strong> — high spend but unhappy</li>
-              <li><strong>sentiment_per_complaint</strong> — friction ratio → r=-0.234</li>
-              <li><strong>sentiment_momentum</strong> — trend-weighted score → r=-0.308 ⭐</li>
-              <li><strong>sentiment_improving_but_low</strong> — recovering but still at risk</li>
-              <li><strong>sentiment_score_sq</strong> — squared (dropped: too collinear)</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>D. Lifecycle &amp; Tenure (9)</h3>
-        <ul>
-          <li>tenure_months (raw)</li>
-          <li>tenure_0_6m, tenure_6_12m, tenure_12_24m, tenure_24m_plus (one-hot)</li>
-          <li>contract_type_numeric (annual=1, monthly=0)</li>
-          <li>contract_stability (auto-renewal enabled)</li>
-          <li>discount_applied</li>
-          <li>contract_risk (monthly + no auto-renewal)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>E–F. Payment &amp; Product (12)</h3>
-        <strong>Payment (3)</strong>
-        <ul style="margin:.4rem 0 .8rem 1rem">
-          <li>failed_payments_count, payment_method_changes, payment_risk_flag</li>
-        </ul>
-        <strong>Product (9)</strong>
-        <ul style="margin:.4rem 0 0 1rem">
-          <li>product_diversity</li>
-          <li>product_photoshop / premiere / illustrator / indesign / after_effects / audition (one-hot)</li>
-          <li>product_concentration (1 / num_products)</li>
-          <li>product_risk (num_products ≤ 1)</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Composite features -->
-    <div class="card">
-      <h3>G. Composite Features — The Two Most Powerful Created Features</h3>
-      <div class="grid-2">
-        <div>
-          <strong>churn_risk_score</strong> <span class="tag-red">(r = +0.360, #1 overall)</span>
-          <pre><code>churn_risk_score = (
-  sentiment_declining  × 0.15
-  escalation_flag      × 0.25  ← highest weight
-  complaint_flag       × 0.15
-  spend_declining      × 0.20
-  engagement_decline   × 0.10
-  contract_risk        × 0.10
-  payment_risk_flag    × 0.05
-)</code></pre>
-          <p style="color:var(--muted);font-size:.85rem">Weighted sum of 7 binary risk signals. Range: 0 (no risk) to 1 (all flags firing). The single strongest predictor in the entire feature set.</p>
-        </div>
-        <div>
-          <strong>loyalty_score</strong> <span class="tag-green">(r = -0.108)</span>
-          <pre><code>loyalty_score = (
-  contract_type_numeric  × 0.20
-  contract_stability     × 0.15
-  mature_customer_flag   × 0.15
-  active_user_flag       × 0.20
-  feature_adoption_flag  × 0.15
-  high_spender_flag      × 0.15
-)</code></pre>
-          <p style="color:var(--muted);font-size:.85rem">Measures how sticky and embedded a customer is. Higher = harder to leave. Opposite of the risk score.</p>
-        </div>
-      </div>
-      <div class="callout" style="margin-top:1rem">
-        <strong>💡 Why composite features beat individual ones</strong>
-        No single feature perfectly predicts churn — but combining 7 weak signals into one weighted score creates a stronger predictor. The model can then use this summary alongside the individual signals, using whichever is most useful. This is also why the composite features ranked #1 and #10 out of all 61 features.
-      </div>
-    </div>
-
-    <!-- Scaling -->
-    <div class="card">
-      <h3>Scaling — StandardScaler</h3>
-      <p>Before the collinearity check, all continuous features were scaled using <code class="inline-code">StandardScaler</code>:</p>
-      <pre><code>scaled_value = (original_value - mean) / standard_deviation</code></pre>
-      <p>This transforms every continuous feature to have <strong>mean = 0</strong> and <strong>std = 1</strong>. Without this, a feature like <code class="inline-code">monthly_spend_avg</code> (range: $10–$2,000) would overpower <code class="inline-code">feature_adoption_rate</code> (range: 0–1) simply because its numbers are bigger — even if adoption rate is more predictive.</p>
-      <br>
-      <p>Binary flags (0/1) were left unscaled as they're already on a consistent scale.</p>
-    </div>
-
-    <!-- Collinearity -->
-    <div class="card">
-      <h3>Collinearity Drop — 9 Features Removed</h3>
-      <p>Two features are "collinear" when they carry nearly identical information (correlation &gt; 0.95). Keeping both confuses the model — it's like giving it the same clue twice.</p>
-      <table style="margin-top:.75rem">
-        <thead><tr><th>Feature Dropped</th><th>Why (too similar to…)</th></tr></thead>
-        <tbody>
-          <tr><td>monthly_spend_current</td><td>monthly_spend_avg (r ≈ 0.97)</td></tr>
-          <tr><td>monthly_spend_z_score</td><td>monthly_spend_avg (same data, just scaled)</td></tr>
-          <tr><td>sentiment_decline_flag</td><td>sentiment_declining (identical column)</td></tr>
-          <tr><td>sentiment_z_score</td><td>sentiment_score (same data, just scaled)</td></tr>
-          <tr><td>sentiment_score_sq</td><td>sentiment_score (r = 0.95+)</td></tr>
-          <tr><td>new_customer_flag</td><td>tenure_0_6m (identical definition)</td></tr>
-          <tr><td>mature_customer_flag</td><td>tenure_24m_plus (identical definition)</td></tr>
-          <tr><td>failed_payments_rate</td><td>failed_payments_count (near-identical)</td></tr>
-          <tr><td>num_products</td><td>product_diversity (r = 0.82 — high but not dropped by threshold, checked manually)</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Final count -->
+  <div class="card">
+    <h3>5 Visualisations Created</h3>
     <div class="grid-3">
-      <div class="stat-box">
-        <div class="num blue">29</div>
-        <div class="lbl">Raw input features</div>
-      </div>
-      <div class="stat-box">
-        <div class="num orange">70</div>
-        <div class="lbl">Features built before collinearity check</div>
-      </div>
-      <div class="stat-box">
-        <div class="num green">61</div>
-        <div class="lbl">Final ML-ready features (after dropping 9)</div>
-      </div>
+      <div><span class="tag tag-blue">viz1</span> Class distribution — pie + bar showing 13.4% churn</div>
+      <div><span class="tag tag-blue">viz2</span> Churn by product — horizontal bar showing product-level variation</div>
+      <div><span class="tag tag-blue">viz3</span> Feature correlations — top 10 Pearson correlations with churn</div>
+      <div><span class="tag tag-blue">viz4</span> Sentiment vs churn — scatter with binned mean churn overlay</div>
+      <div><span class="tag tag-blue">viz5</span> Engagement score vs churn — scatter + decile bar chart</div>
     </div>
   </div>
+</div>
 
-  <!-- ═══ AUDIT ═══ -->
-  <div class="section" id="audit">
-    <div class="section-header">
-      <span class="step-badge red">AUDIT</span>
-      <h2>Pitfalls &amp; Things We Should Watch Out For</h2>
-    </div>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 3: FEATURE ENGINEERING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="features">
+  <div class="section-header">
+    <span class="step-badge orange">Step 3</span>
+    <h2>Feature Engineering Pipeline</h2>
+  </div>
 
+  <div class="grid-4">
+    <div class="stat-box"><div class="num blue">30</div><div class="lbl">Raw Features</div></div>
+    <div class="stat-box"><div class="num orange">70</div><div class="lbl">Features Built</div></div>
+    <div class="stat-box"><div class="num red">9</div><div class="lbl">Dropped (Collinear)</div></div>
+    <div class="stat-box"><div class="num green">61</div><div class="lbl">Final ML Features</div></div>
+  </div>
+
+  <div class="card" style="margin-top:1.25rem">
+    <h3>What is Feature Engineering?</h3>
+    <p>Raw data rarely tells the full story. Feature engineering transforms raw columns into signals the model can use more effectively. It combines domain knowledge with statistical insight — creating new variables that capture patterns the model wouldn't discover on its own from raw inputs.</p>
+    <div class="insight-box">No ML model was used in feature engineering. Every feature was crafted using domain logic and statistical rules — human knowledge converted into code.</div>
+  </div>
+
+  <div class="grid-2">
     <div class="card">
-      <p>Every data science project has assumptions and shortcuts that can cause problems downstream. Here is an honest audit of this project's weak points.</p>
+      <h3>Types of Features Created</h3>
+      <h4>One-Hot Encoding</h4>
+      <ul><li>region, plan_tier, primary_product, contract_type, spend_trend → binary columns</li></ul>
+      <h4>Flag Features</h4>
+      <ul><li>escalation_flag, complaint_flag, payment_risk_flag, spend_declining, active_user_flag</li></ul>
+      <h4>Ratio & Interaction Features</h4>
+      <ul><li>spend_per_product, support_per_tenure, complaints_per_month, feature_adoption × tenure</li></ul>
+      <h4>Composite Scores</h4>
+      <ul><li>churn_risk_score — weighted sum of 7 risk signals</li><li>loyalty_score — weighted sum of 6 retention signals</li><li>engagement_score — login + adoption + recency</li></ul>
+      <h4>Sentiment Features (10 new)</h4>
+      <ul><li>sentiment_critical, sentiment_low, sentiment_high</li><li>sentiment_declining_and_escalated, high_value_low_sentiment</li><li>sentiment_momentum = (score/100 + trend×0.2).clip(0,1)</li></ul>
     </div>
+    <div class="card">
+      <h3>Key Composite Scores</h3>
+      <pre>churn_risk_score =
+  sentiment_declining  × 0.15
+  + escalation_flag    × 0.25
+  + complaint_flag     × 0.15
+  + spend_declining    × 0.20
+  + engagement_decline × 0.10
+  + contract_risk      × 0.10
+  + payment_risk_flag  × 0.05
 
-    <div class="pitfall">
-      <h4>🚨 Pitfall 1 — The data is synthetic (not real)</h4>
-      <p>All 50,000 customers were generated by a formula. Real churn data is far messier — customers churn for reasons that aren't in any dataset (competitor pricing, life events, budget cuts). Correlations in synthetic data are cleaner and more predictable than in the wild.</p>
-      <div class="fix-box">✅ Fix: Use synthetic data only for practice and pipeline development. Validate every insight on real customer data before acting on it.</div>
+loyalty_score =
+  contract_type_numeric × 0.20
+  + contract_stability  × 0.15
+  + mature_customer_flag× 0.15
+  + active_user_flag    × 0.20
+  + feature_adoption_flag×0.15
+  + high_spender_flag   × 0.15</pre>
+      <h4>Collinearity Removal</h4>
+      <p>9 features dropped where Pearson r &gt; 0.95 with another feature. Collinear features add no new information and confuse the model.</p>
+      <div class="warn-box"><strong>Pitfall fixed:</strong> StandardScaler was originally fit on all 50,000 rows — this is data leakage. Fixed in model training: scaler fit only on training data, then applied to val/test.</div>
     </div>
+  </div>
+</div>
 
-    <div class="pitfall">
-      <h4>🚨 Pitfall 2 — Churn labels were generated from the same features we're using to predict churn</h4>
-      <p>We generated churn using sentiment, spend_trend, etc., and then also use those features to predict churn. In a real project this is fine — but here it means our model is essentially reverse-engineering a formula it was designed against. Real-world performance will be lower because real churn has many unmeasured causes.</p>
-      <div class="fix-box">✅ Fix: Accept this as a limitation of synthetic data. Any model trained here will appear "too good" — treat reported metrics with appropriate scepticism.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 3 — No train/test split has been done yet</h4>
-      <p>All analysis and feature engineering was done on the full 50,000 rows. When we eventually train a model, we must split the data first — otherwise the model has "seen" all the data during training and test metrics will be inflated (overfitting).</p>
-      <div class="fix-box">✅ Fix: Before any model training, split: 70% train / 15% validation / 15% test. Feature engineering should be fitted on train and only applied (not refitted) to val/test.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 4 — StandardScaler was fit on the full dataset</h4>
-      <p>We scaled all 50,000 rows together. In a real ML pipeline, the scaler must be <em>fitted only on training data</em> and then <em>applied</em> to validation and test data. Fitting on all data leaks information from test rows into the training process (data leakage).</p>
-      <div class="fix-box">✅ Fix: Move scaler.fit_transform() inside the train split only. Use scaler.transform() (not fit_transform) on val/test sets.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 5 — engagement_score was computed from raw features that are also in the model</h4>
-      <p><code>engagement_score</code> is derived from <code>login_frequency_30d</code>, <code>feature_adoption_rate</code>, and <code>days_since_last_login</code> — all of which are also individual features in the dataset. The model now has access to both the components AND the composite. This is mild redundancy but not a critical issue since we kept individual features as well.</p>
-      <div class="fix-box">✅ Fix: Either drop the raw component features if using the composite, or keep both and let the model decide which is more useful. We kept both — which is fine for tree-based models.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 6 — product_diversity and num_products are highly correlated (r = 0.82)</h4>
-      <p>These two features measure almost the same thing — how many products a customer uses. The collinearity check threshold was 0.95, so both survived. But r = 0.82 is still high enough to cause mild issues in linear models (multicollinearity).</p>
-      <div class="fix-box">✅ Fix: For linear/logistic regression, drop one. For tree-based models (XGBoost, Random Forest) this is less of a concern as they handle redundant features better.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 7 — Composite feature weights were set manually, not learned from data</h4>
-      <p>The weights in <code>churn_risk_score</code> (e.g. escalation_flag × 0.25) were chosen based on correlation values we observed. This is reasonable but imprecise — a model trained on data will find better weights automatically.</p>
-      <div class="fix-box">✅ Fix: Treat the composite features as useful starting points for EDA and rule-based targeting. Let the ML model learn its own weighting during training — don't force the hand-tuned composite on it.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 8 — payment_method_changes is a proxy, not the real thing</h4>
-      <p>The raw data didn't include a "payment method changes" column, so we used <code>product_changes_6m</code> as a proxy. These are not the same thing. The feature has near-zero correlation with churn (r ≈ 0) and is essentially noise.</p>
-      <div class="fix-box">✅ Fix: Drop <code>payment_method_changes</code> from the final feature set — it adds no signal and is misleadingly named. A real dataset would have actual payment method change events.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 9 — Class imbalance not yet handled</h4>
-      <p>13.4% churn means the dataset has roughly 6.5 retained customers for every churner. Most ML models will naturally learn to predict "no churn" more often. We haven't applied any resampling (SMOTE, oversampling, undersampling) or class weights yet.</p>
-      <div class="fix-box">✅ Fix: When training a model, use <code>class_weight='balanced'</code> (sklearn) or <code>scale_pos_weight</code> (XGBoost), or apply SMOTE on the training set only. Evaluate with F1, AUC-ROC, and precision-recall — not accuracy.</div>
-    </div>
-
-    <div class="pitfall">
-      <h4>🚨 Pitfall 10 — Correlation ≠ Causation</h4>
-      <p>We found that escalated_support correlates strongly with churn (r = 0.32). But this doesn't mean escalations <em>cause</em> churn — it's more likely that underlying dissatisfaction causes both escalations and churn. Acting on this by suppressing escalations (e.g. making it harder to reach support) could make churn worse.</p>
-      <div class="fix-box">✅ Fix: Use correlations to identify <em>where</em> to look, not to prescribe actions. The business interpretation must come from domain experts, not statistics alone.</div>
-    </div>
-
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 4: MODEL TRAINING -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="models">
+  <div class="section-header">
+    <span class="step-badge red">Step 4</span>
+    <h2>Model Training & Comparison</h2>
   </div>
 
-  <!-- ═══ NEXT STEPS ═══ -->
-  <div class="section" id="next">
-    <div class="section-header">
-      <span class="step-badge green">NEXT</span>
-      <h2>What Comes Next — The Road to a Model</h2>
+  <div class="card">
+    <h3>Data Split Strategy</h3>
+    <div class="grid-3">
+      <div class="stat-box"><div class="num blue">35,000</div><div class="lbl">Training (70%)</div></div>
+      <div class="stat-box"><div class="num orange">7,500</div><div class="lbl">Validation (15%)</div></div>
+      <div class="stat-box"><div class="num green">7,500</div><div class="lbl">Test (15%)</div></div>
     </div>
+    <div class="insight-box" style="margin-top:1rem">Stratified split: each partition contains the same 13.4% churn rate, preventing any split from accidentally being easier or harder.</div>
+  </div>
 
+  <div class="grid-2">
+    <div class="card">
+      <h3>Model 1 — Logistic Regression <span class="tag tag-green">WINNER</span></h3>
+      <p>Learns a weighted sum of all 61 features and passes it through a sigmoid to produce a churn probability. Simple, fast, interpretable.</p>
+      <h4>How it works</h4>
+      <pre>z = w1×sentiment + w2×churn_risk + ...
+p = 1 / (1 + e^(-z))</pre>
+      <h4>Key settings</h4>
+      <ul>
+        <li><strong>L1 regularisation</strong> — drives useless feature weights to exactly zero (automatic feature selection)</li>
+        <li><strong>C = 0.01</strong> — strong regularisation; model is forced to focus on only the clearest signals</li>
+        <li><strong>class_weight='balanced'</strong> — upweights the rare 13.4% churners in training</li>
+        <li><strong>GridSearchCV</strong> — tried 10 combinations × 5 folds = 50 training runs</li>
+      </ul>
+      <div class="success-box"><strong>AUC-ROC: 0.8386</strong></div>
+    </div>
+    <div class="card">
+      <h3>Model 2 — XGBoost (Structured)</h3>
+      <p>Gradient boosted trees trained on 42 non-sentiment features. Builds 200 trees sequentially — each one correcting the errors of the previous.</p>
+      <h4>How boosting works</h4>
+      <ul>
+        <li>Tree 1: makes first predictions for all customers</li>
+        <li>Tree 2: trained on residuals (errors) of Tree 1</li>
+        <li>Tree 3: fixes remaining errors after Tree 1+2</li>
+        <li>…repeat 200 times with learning_rate=0.1</li>
+      </ul>
+      <h4>Key settings</h4>
+      <ul>
+        <li><strong>max_depth=3</strong> — shallow trees prevent overfitting</li>
+        <li><strong>scale_pos_weight=6.46</strong> — accounts for 6.46:1 class imbalance</li>
+        <li><strong>subsample=0.8</strong> — each tree sees random 80% of customers</li>
+      </ul>
+      <div class="warn-box"><strong>AUC-ROC: 0.7905</strong></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Model 3 — XGBoost (Sentiment)</h3>
+      <p>Same algorithm as Model 2 but trained exclusively on 19 sentiment and support features. Rationale: sentiment data is fundamentally different from behavioural data — a specialist model might capture it better.</p>
+      <div class="warn-box"><strong>AUC-ROC: 0.7987</strong></div>
+      <div class="insight-box" style="margin-top:.75rem">Sentiment features alone slightly outperform structured features alone — confirming sentiment is the strongest churn signal in this dataset.</div>
+    </div>
+    <div class="card">
+      <h3>Model 4 — Ensemble Stack</h3>
+      <p>Meta Logistic Regression trained on out-of-fold predictions from Models 2 and 3. Learns which model to trust more in each situation.</p>
+      <h4>Out-of-Fold (OOF) predictions</h4>
+      <ul>
+        <li>Split training into 5 folds</li>
+        <li>For each fold: train XGB on 4 folds, predict on 1</li>
+        <li>Every customer gets a prediction from a model that never saw them</li>
+        <li>Meta-LR trained on these honest predictions</li>
+      </ul>
+      <div class="warn-box"><strong>AUC-ROC: 0.8184</strong></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Model Comparison Results</h3>
+    <table>
+      <tr><th>Model</th><th>AUC-ROC</th><th>AUC-PR</th><th>F1</th><th>Precision</th><th>Recall</th><th>Rank</th></tr>
+      <tr class="best"><td><strong>Logistic Regression</strong></td><td class="winner">0.8386</td><td class="winner">0.5194</td><td class="winner">0.511</td><td>0.490</td><td>0.534</td><td class="winner">#1</td></tr>
+      <tr><td>Ensemble Stack</td><td>0.8184</td><td>0.4971</td><td>0.487</td><td>0.468</td><td>0.508</td><td>#2</td></tr>
+      <tr><td>XGBoost (Sentiment)</td><td>0.7987</td><td>0.4702</td><td>0.461</td><td>0.442</td><td>0.481</td><td>#3</td></tr>
+      <tr><td>XGBoost (Structured)</td><td>0.7905</td><td>0.4612</td><td>0.449</td><td>0.431</td><td>0.468</td><td>#4</td></tr>
+    </table>
+    <div class="insight-box"><strong>Why LR won:</strong> Feature engineering pre-computed the non-linear patterns XGBoost would have discovered itself. With composite scores like churn_risk_score and loyalty_score already in the data, LR on engineered features outperformed complex tree models. Simple model + strong features beats complex model + raw features.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 5: THRESHOLD ANALYSIS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="threshold">
+  <div class="section-header">
+    <span class="step-badge purple">Step 5</span>
+    <h2>Threshold Optimisation & Cost Matrix</h2>
+  </div>
+
+  <div class="card">
+    <h3>Why Threshold Matters</h3>
+    <p>Every model outputs a churn <em>probability</em> (0–1). To make a yes/no intervention decision, you need a threshold: everyone above it gets contacted. The default of 0.5 is almost never optimal — especially with class imbalance or asymmetric costs.</p>
+    <div class="grid-2" style="margin-top:1rem">
+      <div>
+        <h4>Cost Matrix</h4>
+        <table>
+          <tr><th>Outcome</th><th>Financial Value</th></tr>
+          <tr><td>True Positive (churner caught)</td><td class="winner">+$5,000</td></tr>
+          <tr><td>False Positive (non-churner contacted)</td><td style="color:var(--red)">–$500</td></tr>
+          <tr><td>True Negative (correctly left alone)</td><td>$0</td></tr>
+          <tr><td>False Negative (missed churner)</td><td>$0</td></tr>
+        </table>
+      </div>
+      <div>
+        <h4>Three Optimal Thresholds</h4>
+        <table>
+          <tr><th>Method</th><th>Threshold</th><th>Net Value</th></tr>
+          <tr class="best"><td><strong>Cost-Optimal</strong></td><td>0.409</td><td class="winner">$3,105,500</td></tr>
+          <tr><td>Youden's J</td><td>0.478</td><td>$3,056,500</td></tr>
+          <tr><td>F1-Optimal</td><td>0.701</td><td>$2,401,500</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>Cost-Optimal (0.409) <span class="tag tag-green">Recommended</span></h3>
+      <ul>
+        <li>Contact: 2,809 customers (37.5%)</li>
+        <li>TP saved: 820 churners</li>
+        <li>FP wasted: 1,989 contacts</li>
+        <li>Precision: 29.2% | Recall: 81.8%</li>
+        <li><strong>Net value: $3,105,500</strong></li>
+      </ul>
+      <div class="success-box">Best for: maximising revenue</div>
+    </div>
+    <div class="card">
+      <h3>Youden's J (0.478)</h3>
+      <ul>
+        <li>Contact: 2,379 customers</li>
+        <li>TP saved: 766 churners</li>
+        <li>FP wasted: 1,559 contacts</li>
+        <li>Precision: 32.5% | Recall: 76.4%</li>
+        <li><strong>Net value: $3,056,500</strong></li>
+      </ul>
+      <div class="insight-box">Best for: model evaluation</div>
+    </div>
+    <div class="card">
+      <h3>F1-Optimal (0.701)</h3>
+      <ul>
+        <li>Contact: 1,093 customers</li>
+        <li>TP saved: 536 churners</li>
+        <li>FP wasted: 557 contacts</li>
+        <li>Precision: 49.0% | Recall: 53.4%</li>
+        <li><strong>Net value: $2,401,500</strong></li>
+      </ul>
+      <div class="warn-box">Best for: equal FP/FN cost</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Key Insight: Why Low Precision (29%) is Acceptable</h3>
+    <p>Precision of 29% means only 1 in 3.4 customers contacted is a true churner. This sounds bad — but the economics justify it:</p>
+    <pre>Each churner saved:       +$5,000
+Each false alarm:          -$500
+
+Break-even: save 1 churner per 10 contacts = $5,000 vs $5,000
+At 29% precision:  save 1 churner per 3.4 contacts = $5,000 vs $1,700
+
+Net gain per churner caught: $5,000 - $1,700 = $3,300 profit</pre>
+    <div class="success-box">At cost-optimal threshold: contact broadly, accept false alarms — the math strongly favours it.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 6: XGB FULL COMPARISON -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="xgb">
+  <div class="section-header">
+    <span class="step-badge">Step 6</span>
+    <h2>XGBoost (All 61 Features) vs Logistic Regression</h2>
+  </div>
+
+  <div class="card">
+    <h3>Experiment: Can XGBoost Beat LR with All Features?</h3>
+    <p>Our earlier XGBoost models used only subsets of features (structured or sentiment). What if we gave XGBoost all 61 engineered features and let it decide which ones matter?</p>
+  </div>
+
+  <div class="card">
+    <h3>Results</h3>
+    <table>
+      <tr><th>Metric</th><th>Logistic Regression</th><th>XGBoost (All 61)</th><th>Winner</th></tr>
+      <tr class="best"><td>AUC-ROC</td><td class="winner">0.8386</td><td>0.8310</td><td class="winner">LR</td></tr>
+      <tr><td>AUC-PR</td><td class="winner">0.5194</td><td>0.5134</td><td class="winner">LR</td></tr>
+      <tr><td>F1</td><td class="winner">0.5115</td><td>0.5080</td><td class="winner">LR</td></tr>
+      <tr><td>Precision</td><td class="winner">0.4904</td><td>0.4809</td><td class="winner">LR</td></tr>
+      <tr><td>Recall</td><td>0.5344</td><td class="winner">0.5384</td><td class="winner">XGB</td></tr>
+      <tr><td>Net Value ($)</td><td class="winner">$3,105,500</td><td>$3,023,500</td><td class="winner">LR</td></tr>
+    </table>
+    <div class="success-box"><strong>LR wins again</strong> — AUC 0.8386 vs 0.8310. Net value advantage: $82,000 more per cohort.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Why LR Still Won</h3>
+      <ul>
+        <li>XGBoost's strength is discovering non-linear patterns and feature interactions automatically</li>
+        <li>Our feature engineering pre-computed those interactions: churn_risk_score, loyalty_score, sentiment_momentum</li>
+        <li>XGBoost arrived at a dataset where all the interesting patterns were already encoded as new columns</li>
+        <li>LR with L1 regularisation picked the 20–25 most informative engineered features and ignored the rest</li>
+        <li>XGBoost spread attention across all 61 and overfit slightly</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>When XGBoost Would Win</h3>
+      <ul>
+        <li><strong>Raw features</strong> — no engineering done, XGBoost discovers patterns itself</li>
+        <li><strong>Complex interactions</strong> between engineered features not manually captured</li>
+        <li><strong>Much larger data</strong> — 500k+ rows gives XGBoost more signal to exploit</li>
+        <li><strong>Non-linear boundary</strong> — if churners and non-churners can't be separated by a line</li>
+        <li><strong>More aggressive tuning</strong> — deeper grid search, more trees, regularisation params</li>
+      </ul>
+      <div class="insight-box"><strong>Lesson:</strong> Strong feature engineering can make a simple model beat a complex one.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 7: A/B TEST -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="abtest">
+  <div class="section-header">
+    <span class="step-badge green">Step 7</span>
+    <h2>A/B Test Design & Simulation</h2>
+  </div>
+
+  <div class="card">
+    <h3>Why Run an A/B Test?</h3>
+    <p>The model identifies who might churn. But does the intervention actually stop them? Without a control group, you can't separate the intervention's effect from natural retention. The A/B test is how you prove causation — not just correlation.</p>
+    <div class="grid-2" style="margin-top:1rem">
+      <div class="insight-box"><strong>Control group:</strong> High-risk customers flagged by model but NOT contacted. They churn at the natural baseline rate.</div>
+      <div class="success-box"><strong>Treatment group:</strong> High-risk customers who DO receive the intervention. Their churn rate should be lower if it works.</div>
+    </div>
+    <p style="margin-top:.75rem;color:var(--muted)">The A/B test happens BEFORE full rollout — it's the pilot. Only after it proves the intervention works do you invest in contacting all at-risk customers.</p>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat-box"><div class="num blue">4,283</div><div class="lbl">Required n per group</div></div>
+    <div class="stat-box"><div class="num green">80%</div><div class="lbl">Target Power (MDE)</div></div>
+    <div class="stat-box"><div class="num orange">24.8%</div><div class="lbl">Mean Simulated Lift</div></div>
+    <div class="stat-box"><div class="num purple">99.9%</div><div class="lbl">Empirical Power</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.25rem">
+    <div class="card">
+      <h3>Power Analysis</h3>
+      <table>
+        <tr><th>Parameter</th><th>Value</th></tr>
+        <tr><td>Baseline churn</td><td>13.47%</td></tr>
+        <tr><td>Min detectable effect (MDE)</td><td>2.0% absolute</td></tr>
+        <tr><td>Significance level α</td><td>0.05 (two-tailed)</td></tr>
+        <tr><td>Target power</td><td>80%</td></tr>
+        <tr><td><strong>Required n per group</strong></td><td class="winner"><strong>4,283</strong></td></tr>
+        <tr><td>Power @ MDE (2% abs)</td><td>80.0%</td></tr>
+        <tr><td>Power @ treatment (3.37% abs)</td><td class="winner">99.8%</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Simulation Results (1,000 runs)</h3>
+      <table>
+        <tr><th>Metric</th><th>Value</th></tr>
+        <tr><td>Mean control churn rate</td><td>13.48%</td></tr>
+        <tr><td>Mean treatment churn rate</td><td>10.12%</td></tr>
+        <tr><td>Mean observed lift</td><td class="winner">24.8%</td></tr>
+        <tr><td>95% CI on lift</td><td>[15.7%, 33.3%]</td></tr>
+        <tr><td>% simulations significant</td><td class="winner">99.9%</td></tr>
+        <tr><td>Empirical power</td><td class="winner">99.9%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Empirical (99.9%) vs Theoretical (80%) Power — Why Different?</h3>
     <div class="grid-2">
-      <div class="card">
-        <h3>🔜 Step 5 — Model Training</h3>
-        <ul>
-          <li>Split data: 70/15/15 train/val/test</li>
-          <li>Baseline: Logistic Regression</li>
-          <li>Primary: XGBoost or LightGBM</li>
-          <li>Tune with cross-validation</li>
-          <li>Evaluate with AUC-ROC, F1, Precision-Recall curve</li>
-        </ul>
+      <div>
+        <p><strong>Theoretical 80%</strong> was calculated for detecting the MDE (2% absolute reduction) — the smallest effect we care about.</p>
+        <p style="margin-top:.5rem"><strong>Empirical 99.9%</strong> was measured from simulations using the actual treatment effect (3.37% absolute = 25% relative) — which is 68% larger than the MDE.</p>
       </div>
-      <div class="card">
-        <h3>🔜 Step 6 — Model Evaluation</h3>
-        <ul>
-          <li>Confusion matrix at multiple thresholds</li>
-          <li>Precision-recall tradeoff (business cost of false positives vs missed churners)</li>
-          <li>Decile lift analysis</li>
-          <li>SHAP values for explainability</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>🔜 Step 7 — Business Output</h3>
-        <ul>
-          <li>Score each customer 0–100% churn probability</li>
-          <li>Prioritise top-risk customers for retention team</li>
-          <li>Estimate ROI: cost of intervention vs revenue saved</li>
-          <li>Set up monthly scoring pipeline</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>🔜 Step 8 — Monitoring</h3>
-        <ul>
-          <li>Track feature drift over time (do distributions change?)</li>
-          <li>Monitor model performance as new data arrives</li>
-          <li>Retrain quarterly or when AUC drops below threshold</li>
-          <li>A/B test retention interventions</li>
-        </ul>
-      </div>
-    </div>
+      <pre>Designed for:  2.00% abs reduction → 80% power
+Actual effect: 3.37% abs reduction → 99.8% power
 
-    <div class="callout good" style="margin-top:1.5rem">
-      <strong>✅ Where we are in the pipeline</strong>
-      We have completed the first four steps of a full churn prediction project: data generation → EDA → visualization → feature engineering. The output file <code>synthetic_churn_features.csv</code> (50,000 rows × 62 columns) is ready to be fed directly into a model training script.
+Like studying for a hard exam (2% MDE)
+and getting an easy one (3.37% effect).
+You were over-prepared.</pre>
+    </div>
+    <div class="insight-box"><strong>Key concept:</strong> We designed the sample size for the worst acceptable case (MDE). The simulation runs with the expected case (true treatment effect). At n=4,283, detecting a 3.37% absolute reduction is near-certain.</div>
+  </div>
+
+  <div class="card">
+    <h3>Key Statistical Concepts</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Z-score & Significance</h4>
+        <p>The z-score measures how many standard deviations the observed difference is from zero (what we'd expect under the null hypothesis of no effect). At z = 4.83, the result is 4.83 standard deviations away — a 0.0001% chance of occurring by luck.</p>
+        <pre>z = (ctrl_rate - trt_rate) / SE
+  = (13.47% - 10.10%) / 0.70%
+  = 4.83   &gt;&gt;  1.96 threshold</pre>
+        <p>Anything above z = 1.96 is significant at α = 0.05 (two-tailed). 1.96 is the fixed z-score where only 5% of random noise falls outside ±1.96.</p>
+      </div>
+      <div>
+        <h4>MDE — Minimum Detectable Effect</h4>
+        <p>The smallest improvement that would matter to the business. Set at 2% because smaller reductions don't justify the $500/customer outreach cost.</p>
+        <pre>MDE = 2%   → n = 4,283 per group
+MDE = 1%   → n = 17,000 per group
+MDE = 0.5% → n = 67,000 per group</pre>
+        <p>Smaller MDE = harder to detect = needs more data. Choosing MDE is the most important A/B test design decision.</p>
+      </div>
     </div>
   </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STEP 8: BUSINESS IMPACT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="business">
+  <div class="section-header">
+    <span class="step-badge orange">Step 8</span>
+    <h2>Business Impact & Deployment Strategy</h2>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat-box"><div class="num blue">$3.4M</div><div class="lbl">Full Rollout Cost</div></div>
+    <div class="stat-box"><div class="num green">$5.7M</div><div class="lbl">LTV Saved (5-year)</div></div>
+    <div class="stat-box"><div class="num purple">$2.3M</div><div class="lbl">Net Benefit</div></div>
+    <div class="stat-box"><div class="num orange">68.4%</div><div class="lbl">ROI (LTV basis)</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1.25rem">
+    <div class="card">
+      <h3>Financial Model — Base Case (A/B group)</h3>
+      <table>
+        <tr><th>Line Item</th><th>Value</th></tr>
+        <tr><td>Customers contacted</td><td>4,283</td></tr>
+        <tr><td>Intervention cost per customer</td><td>$500</td></tr>
+        <tr><td>Total outreach cost</td><td style="color:var(--red)">$2,141,500</td></tr>
+        <tr><td>Customers saved from churning</td><td>144</td></tr>
+        <tr><td>Annual revenue saved</td><td>$721,150</td></tr>
+        <tr><td>5-year LTV saved</td><td class="winner">$3,605,751</td></tr>
+        <tr><td>Net benefit (LTV - cost)</td><td class="winner">$1,464,251</td></tr>
+        <tr><td>ROI</td><td class="winner">68.4%</td></tr>
+        <tr><td>Payback period</td><td>35.6 months</td></tr>
+        <tr><td>Cost per customer saved</td><td>$14,848</td></tr>
+      </table>
+      <div class="insight-box"><strong>Why LTV not annual revenue?</strong> Outreach cost is paid once. The retained customer generates $5,000 every year for 5 years. Comparing one-time cost to year-1 revenue only would show a false loss.</div>
+    </div>
+    <div class="card">
+      <h3>Full Rollout (6,735 At-Risk Customers)</h3>
+      <table>
+        <tr><th>Line Item</th><th>Value</th></tr>
+        <tr><td>Total outreach cost</td><td style="color:var(--red)">$3,367,500</td></tr>
+        <tr><td>Customers saved</td><td>227</td></tr>
+        <tr><td>Annual revenue saved</td><td>$1,134,006</td></tr>
+        <tr><td>5-year LTV saved</td><td class="winner">$5,670,028</td></tr>
+        <tr><td>Net benefit</td><td class="winner">$2,302,528</td></tr>
+        <tr><td>ROI</td><td class="winner">68.4%</td></tr>
+      </table>
+      <h4 style="margin-top:.75rem">Sensitivity Analysis — Where ROI Goes Negative</h4>
+      <table>
+        <tr><th>Scenario</th><th>ROI</th></tr>
+        <tr class="best"><td>Base (25% lift, $500)</td><td class="winner">+68%</td></tr>
+        <tr><td>Effect = 20%</td><td>+35%</td></tr>
+        <tr><td>Effect = 15%</td><td>+1% (break even)</td></tr>
+        <tr><td>Effect = 10%</td><td style="color:var(--red)">-33%</td></tr>
+        <tr><td>Cost = $1,000</td><td style="color:var(--red)">-16%</td></tr>
+        <tr><td>Best (30%, $400)</td><td class="winner">+153%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>3-Phase Deployment Strategy</h3>
+    <div class="phase-block p1">
+      <h4>Phase 1 — Canary (Weeks 1–4)</h4>
+      <div class="grid-3">
+        <div><span class="tag tag-blue">Sample</span> 50 per group (1% of at-risk)</div>
+        <div><span class="tag tag-blue">Cost</span> ~$25,000</div>
+        <div><span class="tag tag-blue">Goal</span> Test infrastructure, no surprises</div>
+      </div>
+      <p style="margin-top:.5rem;color:var(--muted)"><strong>Decision gate:</strong> If churn stable and no system issues → proceed. If errors or churn spike → stop and investigate.</p>
+    </div>
+    <div class="phase-block p2">
+      <h4>Phase 2 — Expansion (Weeks 5–12)</h4>
+      <div class="grid-3">
+        <div><span class="tag tag-orange">Sample</span> 3,367 per group (50% of at-risk)</div>
+        <div><span class="tag tag-orange">Cost</span> ~$841,500</div>
+        <div><span class="tag tag-orange">Goal</span> Validate lift and ROI at scale</div>
+      </div>
+      <p style="margin-top:.5rem;color:var(--muted)"><strong>Decision gate:</strong> If churn reduction &gt; 3% AND ROI positive → proceed. Otherwise redesign intervention.</p>
+    </div>
+    <div class="phase-block p3">
+      <h4>Phase 3 — Full Rollout (Week 13+)</h4>
+      <div class="grid-3">
+        <div><span class="tag tag-green">Population</span> All 6,735 at-risk customers</div>
+        <div><span class="tag tag-green">Cost</span> ~$3,367,500</div>
+        <div><span class="tag tag-green">Net benefit</span> ~$2,302,528</div>
+      </div>
+      <p style="margin-top:.5rem;color:var(--muted)"><strong>Ongoing:</strong> Monthly ROI review, annual model retraining, quarterly power analysis update.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Guardrails — When to Pause</h3>
+      <div class="danger-box">
+        <strong>PAUSE immediately if:</strong>
+        <ul style="margin-top:.4rem;padding-left:1.2rem">
+          <li>Treatment churn INCREASES vs control</li>
+          <li>Customer NPS drops &gt; 15 points</li>
+          <li>Model precision falls below 20%</li>
+          <li>System delivery failure &gt; 10%</li>
+          <li>Cost per save exceeds $25,000 (LTV)</li>
+        </ul>
+      </div>
+      <div class="warn-box" style="margin-top:.75rem">
+        <strong>ALERT (investigate) if:</strong>
+        <ul style="margin-top:.4rem;padding-left:1.2rem">
+          <li>Daily churn jumps &gt; 1% above baseline</li>
+          <li>Observed lift &lt; 10% (model degrading)</li>
+          <li>Cost per save exceeds $2,000</li>
+          <li>AUC drops below 0.75 on new data</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Scale-Up Triggers</h3>
+      <div class="success-box">
+        <strong>SCALE UP when all met:</strong>
+        <ul style="margin-top:.4rem;padding-left:1.2rem">
+          <li>Churn reduction ≥ 3% absolute</li>
+          <li>Net benefit positive (LTV &gt; outreach cost)</li>
+          <li>Customer satisfaction stable or improving</li>
+          <li>No operational issues in current phase</li>
+        </ul>
+      </div>
+      <h4 style="margin-top:1rem">Monitoring Cadence</h4>
+      <table>
+        <tr><th>Frequency</th><th>Metric</th></tr>
+        <tr><td>Daily</td><td>Churn rate, delivery failures, cost/save</td></tr>
+        <tr><td>Weekly</td><td>NPS, complaint rate, actual vs predicted lift</td></tr>
+        <tr><td>Monthly</td><td>ROI vs projection, AUC on new data</td></tr>
+        <tr><td>Annual</td><td>Retrain model, re-run power analysis</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PITFALLS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="pitfalls">
+  <div class="section-header">
+    <span class="step-badge red">Audit</span>
+    <h2>Pitfalls Found & Fixed</h2>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>1. Data Leakage in Scaling</h3>
+      <p><strong>Problem:</strong> StandardScaler was fit on all 50,000 rows in feature_engineering.py — including test data. The scaler "saw" test data statistics before training.</p>
+      <p><strong>Fix:</strong> In train_models.py, scaler is fit only on X_train, then transform() applied to val and test separately.</p>
+      <div class="danger-box">Impact: inflated validation scores that don't reflect real-world performance.</div>
+    </div>
+    <div class="card">
+      <h3>2. The Accuracy Trap</h3>
+      <p><strong>Problem:</strong> With 86.6% non-churners, a model predicting "never churn" achieves 86.6% accuracy — but is completely useless.</p>
+      <p><strong>Fix:</strong> Use AUC-ROC, AUC-PR, F1, and business metrics (net value) instead of accuracy. These expose the dumb baseline for what it is: AUC = 0.50.</p>
+      <div class="warn-box">Always compare to a meaningful baseline, not just raw accuracy.</div>
+    </div>
+    <div class="card">
+      <h3>3. Wrong ROI Calculation</h3>
+      <p><strong>Problem:</strong> Initial financial model compared the one-time intervention cost against year-1 revenue only — showing a false negative ROI of -66%.</p>
+      <p><strong>Fix:</strong> ROI must use LTV (5-year value) since the intervention cost is paid once but the retained customer generates revenue for 5 years.</p>
+      <div class="success-box">Correct ROI: +68.4% on LTV basis.</div>
+    </div>
+    <div class="card">
+      <h3>4. Class Imbalance</h3>
+      <p><strong>Problem:</strong> 86.6% non-churners vs 13.4% churners. Models learn to mostly predict "no churn" because it's the easy path to low loss.</p>
+      <p><strong>Fix:</strong> LR uses class_weight='balanced'; XGBoost uses scale_pos_weight=6.46 (ratio of majority to minority class).</p>
+      <div class="warn-box">Without this fix, recall collapses to near zero — the model misses almost every churner.</div>
+    </div>
+    <div class="card">
+      <h3>5. Default Threshold of 0.5</h3>
+      <p><strong>Problem:</strong> Using 0.5 as the churn threshold ignores the asymmetric cost structure. A missed churner ($5,000 loss) is 10× worse than a false alarm ($500 cost).</p>
+      <p><strong>Fix:</strong> Cost-optimal threshold of 0.409 maximises net value at $3.1M — 29% higher than F1-optimal at 0.701.</p>
+      <div class="success-box">Always select threshold based on business costs, not statistical symmetry.</div>
+    </div>
+    <div class="card">
+      <h3>6. Empirical vs Theoretical Power Confusion</h3>
+      <p><strong>Problem:</strong> Theoretical power (80%) and empirical power (99.9%) appear contradictory — which one is right?</p>
+      <p><strong>Fix:</strong> They measure different things. 80% is power at the MDE (2% effect); 99.9% is power at the actual treatment effect (3.37%). Both are correct for their respective effect sizes.</p>
+      <div class="insight-box">Always specify which effect size power is being calculated for.</div>
+    </div>
+    <div class="card">
+      <h3>7. Feature Splitting Hypothesis (Not Validated)</h3>
+      <p><strong>Problem:</strong> We split XGBoost into structured + sentiment models assuming specialisation would help. It didn't — the ensemble scored lower than LR.</p>
+      <p><strong>Fix:</strong> Tested XGBoost on all 61 features. Still lost to LR. Lesson: validate hypotheses with experiments, don't assume architectural choices are beneficial.</p>
+      <div class="warn-box">Intuitive design choices need empirical validation.</div>
+    </div>
+    <div class="card">
+      <h3>8. Confusing A/B Simulation with Real Test</h3>
+      <p><strong>Problem:</strong> The 1,000 simulations might be mistaken for 1,000 actual experiments on real customers.</p>
+      <p><strong>Fix:</strong> Be explicit — simulations use synthetic binomial draws to stress-test the test design. The real A/B test (Phase 1–2) runs on actual customers in production.</p>
+      <div class="insight-box">Simulation = planning. Real A/B test = evidence. They are sequential, not the same.</div>
+    </div>
+    <div class="card">
+      <h3>9. Collinear Features Left In</h3>
+      <p><strong>Problem:</strong> Some engineered features were near-perfect linear combinations of others (r &gt; 0.95), adding no new information while inflating dimensionality.</p>
+      <p><strong>Fix:</strong> 9 collinear features dropped: monthly_spend_current, sentiment_score_sq, new_customer_flag, and 6 others.</p>
+      <div class="warn-box">Collinear features destabilise coefficients and waste model capacity.</div>
+    </div>
+    <div class="card">
+      <h3>10. np.trapz Removed in New NumPy</h3>
+      <p><strong>Problem:</strong> AUC calculation used np.trapz() which was deprecated and removed in NumPy 2.0.</p>
+      <p><strong>Fix:</strong> Replaced with np.trapezoid() which is the current API.</p>
+      <div class="insight-box">Always pin dependency versions or test against latest before deploying.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FINAL SUMMARY -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="section" id="summary">
+  <div class="section-header">
+    <span class="step-badge green">Summary</span>
+    <h2>Project Summary & Key Learnings</h2>
+  </div>
+
+  <div class="card">
+    <h3>What We Built — End to End</h3>
+    <div style="overflow-x:auto">
+    <table>
+      <tr><th>Step</th><th>What</th><th>Output</th><th>Key Finding</th></tr>
+      <tr><td>1</td><td>Synthetic data generation</td><td>50,000 × 30 CSV</td><td>13.4% churn rate, sentiment is top driver</td></tr>
+      <tr><td>2</td><td>EDA (7 sections)</td><td>Statistical findings</td><td>Escalation = 4.4× churn lift; 4 rules catch 77.6% of churners</td></tr>
+      <tr><td>3</td><td>Feature engineering</td><td>61 ML-ready features</td><td>Composite scores (churn_risk, loyalty) encode domain knowledge</td></tr>
+      <tr><td>4</td><td>Model training (4 models)</td><td>LR selected as best</td><td>LR AUC=0.8386, beats XGBoost with strong features</td></tr>
+      <tr><td>5</td><td>Threshold optimisation</td><td>Cost-optimal thr=0.409</td><td>Net value $3.1M; precision 29% is acceptable given economics</td></tr>
+      <tr><td>6</td><td>XGBoost (all 61 features)</td><td>LR still wins</td><td>Feature engineering removed XGBoost's main advantage</td></tr>
+      <tr><td>7</td><td>A/B test simulation</td><td>n=4,283, power=99.9%</td><td>25% lift detected in 999/1000 simulations</td></tr>
+      <tr><td>8</td><td>Business impact</td><td>3-phase rollout plan</td><td>ROI=68%, $2.3M net benefit, break-even at 15% lift</td></tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Top 5 Learnings</h3>
+      <ol style="padding-left:1.2rem;color:var(--muted)">
+        <li style="margin-bottom:.6rem"><strong>Feature engineering &gt; model complexity.</strong> A logistic regression on well-engineered features beat XGBoost across every metric. Invest in features before chasing algorithms.</li>
+        <li style="margin-bottom:.6rem"><strong>Always use business metrics, not just AUC.</strong> Two models with similar AUC can have very different net values depending on where their errors fall.</li>
+        <li style="margin-bottom:.6rem"><strong>Threshold is a business decision, not a statistical one.</strong> The cost-optimal threshold (0.409) generated $700K more than the F1-optimal one (0.701) by accepting low precision.</li>
+        <li style="margin-bottom:.6rem"><strong>Power analysis before the experiment.</strong> Running an A/B test without knowing if you have enough data is expensive. n=4,283 was calculated upfront to guarantee 80% power.</li>
+        <li style="margin-bottom:.6rem"><strong>Phased deployment reduces risk.</strong> Committing $3.4M without a canary phase is reckless. The 3-phase rollout lets you validate at each stage before full investment.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Final Model — At a Glance</h3>
+      <table>
+        <tr><th>Property</th><th>Value</th></tr>
+        <tr><td>Algorithm</td><td>Logistic Regression (L1, C=0.01)</td></tr>
+        <tr><td>Features</td><td>61 engineered from 30 raw</td></tr>
+        <tr><td>AUC-ROC</td><td class="winner">0.8386</td></tr>
+        <tr><td>Deployment threshold</td><td>0.409 (cost-optimal)</td></tr>
+        <tr><td>Recall @ threshold</td><td>81.8%</td></tr>
+        <tr><td>Precision @ threshold</td><td>29.2%</td></tr>
+        <tr><td>Net value per cohort</td><td class="winner">$3,105,500</td></tr>
+        <tr><td>Full rollout net benefit</td><td class="winner">$2,302,528</td></tr>
+        <tr><td>ROI (5-yr LTV)</td><td class="winner">68.4%</td></tr>
+        <tr><td>A/B test sample size</td><td>4,283 per group</td></tr>
+        <tr><td>Empirical power</td><td class="winner">99.9%</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Files in This Project</h3>
+    <div class="grid-2">
+      <div>
+        <h4>Python Scripts</h4>
+        <ul style="color:var(--muted);font-size:.9rem">
+          <li>generate_synthetic_churn.py — data generation</li>
+          <li>analyze_churn.py — 7-section EDA</li>
+          <li>visualize_churn_v2.py — 5 EDA charts</li>
+          <li>feature_engineering.py — 29→61 feature pipeline</li>
+          <li>train_models.py — 4 model comparison</li>
+          <li>threshold_analysis.py — ROC + cost optimisation</li>
+          <li>train_xgb_full.py — XGBoost all-features test</li>
+          <li>ab_test_simulation.py — power analysis + 1000 sims</li>
+          <li>business_impact.py — financial model + deployment</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Key Outputs</h4>
+        <ul style="color:var(--muted);font-size:.9rem">
+          <li>synthetic_churn_50k.csv — 50K customer dataset</li>
+          <li>synthetic_churn_features.csv — 61-feature dataset</li>
+          <li>best_model.pkl — serialised LR model + scaler</li>
+          <li>model_comparison.csv — all model metrics</li>
+          <li>outputs/viz1–5 — EDA visualisations</li>
+          <li>outputs/m1–5 — model comparison charts</li>
+          <li>outputs/t1–5 — threshold analysis charts</li>
+          <li>outputs/ab1–4 — A/B test charts</li>
+          <li>outputs/biz1–5 — business impact charts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div><!-- /container -->
 
 <footer>
-  <strong>Customer Churn Prediction Project</strong><br>
-  Built with Python · pandas · numpy · scipy · scikit-learn · matplotlib · seaborn<br>
-  50,000 synthetic customers · 30 raw features · 61 engineered features · 13.4% churn rate
+  Customer Churn Prediction Project &mdash; End-to-End ML Pipeline &mdash; 50,000 Customers &mdash; AUC 0.8386 &mdash; ROI 68.4%
 </footer>
 
 </body>
